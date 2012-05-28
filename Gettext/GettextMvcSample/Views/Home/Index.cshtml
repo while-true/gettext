@@ -1,0 +1,36 @@
+﻿@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+@model GettextMvcSample.Models.Home.IndexModel
+           
+@section Head
+{
+    <script src="@Url.Content("~/Scripts/index.js")" type="text/javascript"></script>
+}
+
+<h2>Index</h2>
+
+<p>Hello world from Razor View!</p>
+
+<p>@Model.Message</p>
+
+<p id="index-js-message"></p>
+
+<div>
+    
+    <p>@Html.ValidationMessageFor(x => x.Email)</p>
+    <p>
+        @Html.LabelFor(x => x.Email)
+        @Html.TextBoxFor(x => x.Email)
+    </p>
+    
+    <p>
+        @Html.ValidationMessageFor(x => x.TooLong)
+    </p>
+    <p>
+        @Html.LabelFor(x => x.TooLong)
+        @Html.TextBoxFor(x => x.TooLong)
+    </p>
+
+</div>

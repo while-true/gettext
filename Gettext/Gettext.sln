@@ -3,6 +3,8 @@ Microsoft Visual Studio Solution File, Format Version 11.00
 # Visual Studio 2010
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GettextMvcSample", "GettextMvcSample\GettextMvcSample.csproj", "{28B9141A-FF63-4650-B616-20D68E8B87E6}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GettextMvcLib", "GettextMvcLib\GettextMvcLib.csproj", "{9EFA30DA-0DDD-4B21-AD19-6B8FED88AB66}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -13,6 +15,10 @@ Global
 		{28B9141A-FF63-4650-B616-20D68E8B87E6}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{28B9141A-FF63-4650-B616-20D68E8B87E6}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{28B9141A-FF63-4650-B616-20D68E8B87E6}.Release|Any CPU.Build.0 = Release|Any CPU
+		{9EFA30DA-0DDD-4B21-AD19-6B8FED88AB66}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9EFA30DA-0DDD-4B21-AD19-6B8FED88AB66}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9EFA30DA-0DDD-4B21-AD19-6B8FED88AB66}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9EFA30DA-0DDD-4B21-AD19-6B8FED88AB66}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

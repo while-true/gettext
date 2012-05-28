@@ -134,7 +134,12 @@
     <Content Include="Views\Shared\Error.cshtml" />
     <Content Include="Views\Shared\_Layout.cshtml" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <ProjectReference Include="..\GettextMvcLib\GettextMvcLib.csproj">
+      <Project>{9EFA30DA-0DDD-4B21-AD19-6B8FED88AB66}</Project>
+      <Name>GettextMvcLib</Name>
+    </ProjectReference>
+  </ItemGroup>
   <ItemGroup>
     <Content Include="packages.config" />
   </ItemGroup>
