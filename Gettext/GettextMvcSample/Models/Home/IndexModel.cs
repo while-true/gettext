@@ -19,6 +19,30 @@ namespace GettextMvcSample.Models.Home
         [Display(Name = "Too Long Field")]
         public string TooLong { get; set; }
 
+        public IndexAnotherModel AnotherModel { get; set; }
 
+        public class IndexAnotherModel : BaseModel, IValidatableObject
+        {
+            [Display(Name = "Password")]
+            public string Password { get; set; }
+
+            public IEnumerable<ValidationResult> Validate(ValidationContext validationContext)
+            {
+                return new[]
+                       {
+                           new ValidationResult("Hello world from custom validator",
+                                                new[]
+                                                    {
+                                                        "Password"
+                                                    }),
+                       };
+            }
+        }
+
+        public IndexModel()
+        {
+            
+        }
     }
+
 }

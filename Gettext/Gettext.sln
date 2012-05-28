@@ -5,6 +5,10 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GettextMvcSample", "Gettext
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GettextMvcLib", "GettextMvcLib\GettextMvcLib.csproj", "{9EFA30DA-0DDD-4B21-AD19-6B8FED88AB66}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GettextPoParser", "GettextPoParser\GettextPoParser.csproj", "{880D4360-A8FC-4CC7-A9A3-0CE9576D928B}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GettextTests", "GettextTests\GettextTests.csproj", "{A2EAD91E-9F04-4B2A-9F98-E3C5A113D0AA}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -19,6 +23,14 @@ Global
 		{9EFA30DA-0DDD-4B21-AD19-6B8FED88AB66}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{9EFA30DA-0DDD-4B21-AD19-6B8FED88AB66}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{9EFA30DA-0DDD-4B21-AD19-6B8FED88AB66}.Release|Any CPU.Build.0 = Release|Any CPU
+		{880D4360-A8FC-4CC7-A9A3-0CE9576D928B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{880D4360-A8FC-4CC7-A9A3-0CE9576D928B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{880D4360-A8FC-4CC7-A9A3-0CE9576D928B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{880D4360-A8FC-4CC7-A9A3-0CE9576D928B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A2EAD91E-9F04-4B2A-9F98-E3C5A113D0AA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A2EAD91E-9F04-4B2A-9F98-E3C5A113D0AA}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A2EAD91E-9F04-4B2A-9F98-E3C5A113D0AA}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A2EAD91E-9F04-4B2A-9F98-E3C5A113D0AA}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

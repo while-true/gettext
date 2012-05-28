@@ -32,5 +32,13 @@
         @Html.LabelFor(x => x.TooLong)
         @Html.TextBoxFor(x => x.TooLong)
     </p>
+    
+    <p>
+        @Html.ValidationMessageFor(x => x.AnotherModel.Password)
+    </p>
+    <p>
+        @Html.LabelFor(x => x.AnotherModel.Password)
+        @Html.TextBoxFor(x => x.AnotherModel.Password)
+    </p>
 
 </div>
