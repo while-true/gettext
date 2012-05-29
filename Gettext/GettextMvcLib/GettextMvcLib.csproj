@@ -42,6 +42,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Catalog\GettextCatalog.cs" />
     <Compile Include="GettextMetadataProvider.cs" />
     <Compile Include="GettextModelValidator.cs" />
     <Compile Include="GettextModelValidatorProvider.cs" />

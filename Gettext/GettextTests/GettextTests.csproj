@@ -48,6 +48,10 @@
     <Compile Include="TestPoParser.cs" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\GettextMvcLib\GettextMvcLib.csproj">
+      <Project>{9EFA30DA-0DDD-4B21-AD19-6B8FED88AB66}</Project>
+      <Name>GettextMvcLib</Name>
+    </ProjectReference>
     <ProjectReference Include="..\GettextPoParser\GettextPoParser.csproj">
       <Project>{880D4360-A8FC-4CC7-A9A3-0CE9576D928B}</Project>
       <Name>GettextPoParser</Name>
@@ -91,6 +95,16 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="test-po\test_wrap.po">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="test-po\test_basic_1.po">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="test-po\test_basic_2.po">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
   </ItemGroup>
