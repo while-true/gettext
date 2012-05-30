@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Web;
+using GettextMvcLib.HttpContextHelper;
 
 namespace GettextMvcSample.Models.Home
 {
@@ -30,7 +31,7 @@ namespace GettextMvcSample.Models.Home
             {
                 return new[]
                        {
-                           new ValidationResult("Hello world from custom validator",
+                           new ValidationResult(S._("Hello world from custom validator"),
                                                 new[]
                                                     {
                                                         "Password"

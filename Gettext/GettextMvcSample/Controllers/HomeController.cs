@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using GettextMvcLib.HttpContextHelper;
 using GettextMvcSample.Models.Home;
 
 namespace GettextMvcSample.Controllers
@@ -13,7 +14,7 @@ namespace GettextMvcSample.Controllers
         {
             var model = new IndexModel();
 
-            model.Message = "Hello world from Controller code!";
+            model.Message = S._("Hello world from Controller code!");
             model.Email = "";
             model.TooLong = "stringy";
             model.AnotherModel = new IndexModel.IndexAnotherModel
