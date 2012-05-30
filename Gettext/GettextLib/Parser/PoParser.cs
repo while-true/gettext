@@ -4,9 +4,9 @@
 
 // GPPG version 1.5.0
 // Machine:  GARFIELD
-// DateTime: 29.5.2012 17:09:48
+// DateTime: 30.5.2012 11:37:14
 // UserName: Rudi
-// Input file <po.y - 29.5.2012 17:05:45>
+// Input file <po.y - 30.5.2012 11:36:56>
 
 // options: no-lines gplex
 
@@ -16,7 +16,7 @@ using System.Globalization;
 using System.Text;
 using QUT.Gppg;
 
-namespace Gettext.PoScanner
+namespace GettextLib.Parser
 {
 internal enum Tokens {
     error=1,EOF=2,STRING=3,DIGIT=4,MSGID=5,MSGID_PLURAL=6,
@@ -27,21 +27,21 @@ internal partial struct ValueType
 	public string String;
 	public int Int;
 	
-	public GettextMvcLib.Catalog.MultiLineString multiLineString;
+	public GettextLib.Catalog.MultiLineString multiLineString;
 	
-	public GettextMvcLib.Catalog.MultiLineString comments;
+	public GettextLib.Catalog.MultiLineString comments;
 	
-	public GettextMvcLib.Catalog.GettextCatalog Catalog;
+	public GettextLib.Catalog.GettextCatalog Catalog;
 	
-	public List<GettextMvcLib.Catalog.Translation> Messages;
-	public GettextMvcLib.Catalog.Translation Message;
+	public List<GettextLib.Catalog.Translation> Messages;
+	public GettextLib.Catalog.Translation Message;
 	
-	public GettextMvcLib.Catalog.Translation.TranslationString MessageTranslation;
-	public List<GettextMvcLib.Catalog.Translation.TranslationString> MessageTranslations;
+	public GettextLib.Catalog.Translation.TranslationString MessageTranslation;
+	public List<GettextLib.Catalog.Translation.TranslationString> MessageTranslations;
 	
-	public GettextMvcLib.Catalog.MultiLineString MessageContext;
+	public GettextLib.Catalog.MultiLineString MessageContext;
 	
-	public GettextMvcLib.Catalog.Translation MessageId;
+	public GettextLib.Catalog.Translation MessageId;
 }
 // Abstract base class for GPLEX scanners
 internal abstract class ScanBase : AbstractScanner<ValueType,LexLocation> {
@@ -145,21 +145,21 @@ internal partial class Parser: ShiftReduceParser<ValueType, LexLocation>
     {
       case 2: // Anon@1 -> /* empty */
 {
-				CurrentSemanticValue.Catalog = new GettextMvcLib.Catalog.GettextCatalog();
+				CurrentSemanticValue.Catalog = new GettextLib.Catalog.GettextCatalog();
 				CurrentSemanticValue.Catalog.AddTranslations(ValueStack[ValueStack.Depth-1].Messages);
 				
 				Catalog = CurrentSemanticValue.Catalog;
 			}
         break;
       case 4: // MessageBlocks -> MessageBlock
-{ CurrentSemanticValue.Messages = new List<GettextMvcLib.Catalog.Translation>(); CurrentSemanticValue.Messages.Add(ValueStack[ValueStack.Depth-1].Message); }
+{ CurrentSemanticValue.Messages = new List<GettextLib.Catalog.Translation>(); CurrentSemanticValue.Messages.Add(ValueStack[ValueStack.Depth-1].Message); }
         break;
       case 5: // MessageBlocks -> MessageBlocks, MessageBlock
 { ValueStack[ValueStack.Depth-2].Messages.Add(ValueStack[ValueStack.Depth-1].Message); CurrentSemanticValue.Messages = ValueStack[ValueStack.Depth-2].Messages; }
         break;
       case 6: // MessageBlock -> MessageComments, MessageContext, MessageId, MessageTranslations
 {
-			CurrentSemanticValue.Message = new GettextMvcLib.Catalog.Translation();
+			CurrentSemanticValue.Message = new GettextLib.Catalog.Translation();
 			if (ValueStack[ValueStack.Depth-4].comments != null)	CurrentSemanticValue.Message.Comment = ValueStack[ValueStack.Depth-4].comments;
 			if (ValueStack[ValueStack.Depth-3].MessageContext != null) CurrentSemanticValue.Message.MessageContext = ValueStack[ValueStack.Depth-3].MessageContext;
 			
@@ -177,13 +177,13 @@ internal partial class Parser: ShiftReduceParser<ValueType, LexLocation>
         break;
       case 9: // MessageId -> MSGID, MultiLineString
 {
-			CurrentSemanticValue.MessageId = new GettextMvcLib.Catalog.Translation();
+			CurrentSemanticValue.MessageId = new GettextLib.Catalog.Translation();
 			CurrentSemanticValue.MessageId.MessageId = ValueStack[ValueStack.Depth-1].multiLineString;
 		}
         break;
       case 10: // MessageId -> MSGID, MultiLineString, MSGID_PLURAL, MultiLineString
 {
-			CurrentSemanticValue.MessageId = new GettextMvcLib.Catalog.Translation();
+			CurrentSemanticValue.MessageId = new GettextLib.Catalog.Translation();
 			CurrentSemanticValue.MessageId.MessageId = ValueStack[ValueStack.Depth-3].multiLineString;
 			CurrentSemanticValue.MessageId.MessageIdPlural = ValueStack[ValueStack.Depth-1].multiLineString;
 		}
@@ -195,34 +195,34 @@ internal partial class Parser: ShiftReduceParser<ValueType, LexLocation>
 { CurrentSemanticValue.MessageContext = null; }
         break;
       case 13: // MessageTranslations -> MessageTranslation
-{ CurrentSemanticValue.MessageTranslations = new List<GettextMvcLib.Catalog.Translation.TranslationString>(); CurrentSemanticValue.MessageTranslations.Add(ValueStack[ValueStack.Depth-1].MessageTranslation); }
+{ CurrentSemanticValue.MessageTranslations = new List<GettextLib.Catalog.Translation.TranslationString>(); CurrentSemanticValue.MessageTranslations.Add(ValueStack[ValueStack.Depth-1].MessageTranslation); }
         break;
       case 14: // MessageTranslations -> MessageTranslations, MessageTranslation
 { ValueStack[ValueStack.Depth-2].MessageTranslations.Add(ValueStack[ValueStack.Depth-1].MessageTranslation); CurrentSemanticValue.MessageTranslations = ValueStack[ValueStack.Depth-2].MessageTranslations; }
         break;
       case 15: // MessageTranslation -> MSGSTR, MultiLineString
 {
-			CurrentSemanticValue.MessageTranslation = new GettextMvcLib.Catalog.Translation.TranslationString();
+			CurrentSemanticValue.MessageTranslation = new GettextLib.Catalog.Translation.TranslationString();
 			CurrentSemanticValue.MessageTranslation.Message = ValueStack[ValueStack.Depth-1].multiLineString;
 			CurrentSemanticValue.MessageTranslation.Index = 0;
 		}
         break;
       case 16: // MessageTranslation -> MSGSTR, LBRACKET, DIGIT, RBRACKET, MultiLineString
 {
-			CurrentSemanticValue.MessageTranslation = new GettextMvcLib.Catalog.Translation.TranslationString();
+			CurrentSemanticValue.MessageTranslation = new GettextLib.Catalog.Translation.TranslationString();
 			CurrentSemanticValue.MessageTranslation.Message = ValueStack[ValueStack.Depth-1].multiLineString;
 			CurrentSemanticValue.MessageTranslation.Index = ValueStack[ValueStack.Depth-3].Int;
 		}
         break;
       case 17: // Comments -> COMMENT
-{ CurrentSemanticValue.comments = new GettextMvcLib.Catalog.MultiLineString(); CurrentSemanticValue.comments.AddLine(ValueStack[ValueStack.Depth-1].String); }
+{ CurrentSemanticValue.comments = new GettextLib.Catalog.MultiLineString(); CurrentSemanticValue.comments.AddLine(ValueStack[ValueStack.Depth-1].String); }
         break;
       case 18: // Comments -> Comments, COMMENT
 { ValueStack[ValueStack.Depth-2].comments.AddLine(ValueStack[ValueStack.Depth-1].String); CurrentSemanticValue.comments = ValueStack[ValueStack.Depth-2].comments; }
         break;
       case 19: // MultiLineString -> STRING, EOL
 {
-				CurrentSemanticValue.multiLineString = new GettextMvcLib.Catalog.MultiLineString();
+				CurrentSemanticValue.multiLineString = new GettextLib.Catalog.MultiLineString();
 				CurrentSemanticValue.multiLineString.AddLine(ValueStack[ValueStack.Depth-2].String);
 			}
         break;
@@ -247,7 +247,7 @@ internal partial class Parser: ShiftReduceParser<ValueType, LexLocation>
   }
 
 
-public GettextMvcLib.Catalog.GettextCatalog Catalog { get; private set; }
+public GettextLib.Catalog.GettextCatalog Catalog { get; private set; }
 
 public Parser(Scanner scn) : base(scn) { }
 

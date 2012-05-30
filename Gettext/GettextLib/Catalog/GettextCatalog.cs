@@ -1,9 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
+using GettextLib.Parser;
 
-namespace GettextMvcLib.Catalog
+namespace GettextLib.Catalog
 {
     public class GettextCatalog
     {
@@ -27,6 +26,23 @@ namespace GettextMvcLib.Catalog
             foreach (var translation in translations)
             {
                 AddTranslation(translation);
+            }
+        }
+
+        public static GettextCatalog ParseFromPoString(string poString)
+        {
+            try
+            {
+                var lexer = new Scanner();
+                lexer.SetSource(poString, 0);
+                var parser = new Parser.Parser(lexer);
+                parser.Parse();
+
+                return parser.Catalog;
+
+            } catch (Exception e)
+            {
+                throw new Exception("Parsing exception!", e);
             }
         }
     }

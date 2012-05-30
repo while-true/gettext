@@ -5,11 +5,11 @@
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProductVersion>8.0.30703</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
-    <ProjectGuid>{880D4360-A8FC-4CC7-A9A3-0CE9576D928B}</ProjectGuid>
+    <ProjectGuid>{E69B82A7-0643-46B6-91BE-BA44B367E159}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>GettextPoParser</RootNamespace>
-    <AssemblyName>GettextPoParser</AssemblyName>
+    <RootNamespace>GettextLib</RootNamespace>
+    <AssemblyName>GettextLib</AssemblyName>
     <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
   </PropertyGroup>
@@ -18,7 +18,7 @@
     <DebugType>full</DebugType>
     <Optimize>false</Optimize>
     <OutputPath>bin\Debug\</OutputPath>
-    <DefineConstants>TRACE;DEBUG</DefineConstants>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
@@ -40,16 +40,16 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="lexer\PoLexer.cs" />
-    <Compile Include="lexer\PoParser.cs" />
-    <Compile Include="lexer\ShiftReduceParserCode.cs" />
+    <Compile Include="Catalog\GettextCatalog.cs" />
+    <Compile Include="Gettext.cs" />
+    <Compile Include="GettextDummy.cs" />
+    <Compile Include="GettextPseudo.cs" />
+    <Compile Include="IGettext.cs" />
+    <Compile Include="Parser\PoLexer.cs" />
+    <Compile Include="Parser\PoParser.cs" />
+    <Compile Include="Parser\ShiftReduceParserCode.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\GettextMvcLib\GettextMvcLib.csproj">
-      <Project>{9EFA30DA-0DDD-4B21-AD19-6B8FED88AB66}</Project>
-      <Name>GettextMvcLib</Name>
-    </ProjectReference>
+    <Compile Include="Utils.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

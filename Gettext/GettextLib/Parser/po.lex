@@ -1,4 +1,4 @@
-%namespace Gettext.PoScanner
+%namespace GettextLib.Parser
 %option verbose summary nofiles out:PoLexer.cs codePage:utf-8 unicode
 %visibility internal
 %tokentype Tokens

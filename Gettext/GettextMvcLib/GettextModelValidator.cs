@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Web;
 using System.Web.Mvc;
 using System.Web.Routing;
+using GettextMvcLib.HttpContextHelper;
 
 namespace GettextMvcLib
 {
@@ -31,7 +32,7 @@ namespace GettextMvcLib
                 l.Add(new ModelValidationResult
                           {
                               MemberName = modelValidationResult.MemberName,
-                              Message = Utils.PseudoTranslate(modelValidationResult.Message)
+                              Message = S._(modelValidationResult.Message)
                           });
             }
 

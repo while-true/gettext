@@ -1,4 +1,4 @@
-%namespace Gettext.PoScanner
+%namespace GettextLib.Parser
 %output=PoParser.cs
 %visibility internal
 %start Catalog
@@ -8,21 +8,21 @@
 	public string String;
 	public int Int;
 	
-	public GettextMvcLib.Catalog.MultiLineString multiLineString;
+	public GettextLib.Catalog.MultiLineString multiLineString;
 	
-	public GettextMvcLib.Catalog.MultiLineString comments;
+	public GettextLib.Catalog.MultiLineString comments;
 	
-	public GettextMvcLib.Catalog.GettextCatalog Catalog;
+	public GettextLib.Catalog.GettextCatalog Catalog;
 	
-	public List<GettextMvcLib.Catalog.Translation> Messages;
-	public GettextMvcLib.Catalog.Translation Message;
+	public List<GettextLib.Catalog.Translation> Messages;
+	public GettextLib.Catalog.Translation Message;
 	
-	public GettextMvcLib.Catalog.Translation.TranslationString MessageTranslation;
-	public List<GettextMvcLib.Catalog.Translation.TranslationString> MessageTranslations;
+	public GettextLib.Catalog.Translation.TranslationString MessageTranslation;
+	public List<GettextLib.Catalog.Translation.TranslationString> MessageTranslations;
 	
-	public GettextMvcLib.Catalog.MultiLineString MessageContext;
+	public GettextLib.Catalog.MultiLineString MessageContext;
 	
-	public GettextMvcLib.Catalog.Translation MessageId;
+	public GettextLib.Catalog.Translation MessageId;
 }
 
 %token <String> STRING
@@ -56,7 +56,7 @@
 
 Catalog
 	: MessageBlocks	{
-				$$ = new GettextMvcLib.Catalog.GettextCatalog();
+				$$ = new GettextLib.Catalog.GettextCatalog();
 				$$.AddTranslations($1);
 				
 				Catalog = $$;
@@ -65,14 +65,14 @@ Catalog
 	;
 	
 MessageBlocks
-	: MessageBlock { $$ = new List<GettextMvcLib.Catalog.Translation>(); $$.Add($1); }
+	: MessageBlock { $$ = new List<GettextLib.Catalog.Translation>(); $$.Add($1); }
 	| MessageBlocks MessageBlock { $1.Add($2); $$ = $1; }
 	;
 
 MessageBlock
 	: MessageComments MessageContext MessageId MessageTranslations 
 		{
-			$$ = new GettextMvcLib.Catalog.Translation();
+			$$ = new GettextLib.Catalog.Translation();
 			if ($1 != null)	$$.Comment = $1;
 			if ($2 != null) $$.MessageContext = $2;
 			
@@ -91,12 +91,12 @@ MessageComments
 MessageId
 	: MSGID MultiLineString 
 		{
-			$$ = new GettextMvcLib.Catalog.Translation();
+			$$ = new GettextLib.Catalog.Translation();
 			$$.MessageId = $2;
 		}
 	| MSGID MultiLineString MSGID_PLURAL MultiLineString
 		{
-			$$ = new GettextMvcLib.Catalog.Translation();
+			$$ = new GettextLib.Catalog.Translation();
 			$$.MessageId = $2;
 			$$.MessageIdPlural = $4;
 		}
@@ -108,33 +108,33 @@ MessageContext
 	;
 
 MessageTranslations
-	:	MessageTranslation { $$ = new List<GettextMvcLib.Catalog.Translation.TranslationString>(); $$.Add($1); }
+	:	MessageTranslation { $$ = new List<GettextLib.Catalog.Translation.TranslationString>(); $$.Add($1); }
 	|	MessageTranslations MessageTranslation { $1.Add($2); $$ = $1; }
 	;
 
 MessageTranslation
 	:	MSGSTR MultiLineString
 		{
-			$$ = new GettextMvcLib.Catalog.Translation.TranslationString();
+			$$ = new GettextLib.Catalog.Translation.TranslationString();
 			$$.Message = $2;
 			$$.Index = 0;
 		}
 	|	MSGSTR LBRACKET DIGIT RBRACKET MultiLineString
 		{
-			$$ = new GettextMvcLib.Catalog.Translation.TranslationString();
+			$$ = new GettextLib.Catalog.Translation.TranslationString();
 			$$.Message = $5;
 			$$.Index = $3;
 		}
 	;
 
 Comments 
-	: COMMENT { $$ = new GettextMvcLib.Catalog.MultiLineString(); $$.AddLine($1); }
+	: COMMENT { $$ = new GettextLib.Catalog.MultiLineString(); $$.AddLine($1); }
 	| Comments COMMENT { $1.AddLine($2); $$ = $1; }
 	;
 
 MultiLineString
 	: STRING EOL	{
-				$$ = new GettextMvcLib.Catalog.MultiLineString();
+				$$ = new GettextLib.Catalog.MultiLineString();
 				$$.AddLine($1);
 			}
 	| MultiLineString STRING EOL	{
@@ -145,7 +145,7 @@ MultiLineString
 
 %%
 
-public GettextMvcLib.Catalog.GettextCatalog Catalog { get; private set; }
+public GettextLib.Catalog.GettextCatalog Catalog { get; private set; }
 
 public Parser(Scanner scn) : base(scn) { }
 

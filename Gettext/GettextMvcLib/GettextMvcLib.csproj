@@ -35,6 +35,7 @@
     <Reference Include="System.Core" />
     <Reference Include="System.Web" />
     <Reference Include="System.Web.Mvc, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL" />
+    <Reference Include="System.Web.WebPages, Version=1.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
@@ -42,12 +43,21 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Catalog\GettextCatalog.cs" />
+    <Compile Include="Consts.cs" />
+    <Compile Include="GettextFactory.cs" />
     <Compile Include="GettextMetadataProvider.cs" />
     <Compile Include="GettextModelValidator.cs" />
     <Compile Include="GettextModelValidatorProvider.cs" />
+    <Compile Include="GettextTranslationContext.cs" />
+    <Compile Include="HttpContextHelper\S.cs" />
+    <Compile Include="MvcHtmlHelper\GettextExtensions.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Utils.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\GettextLib\GettextLib.csproj">
+      <Project>{E69B82A7-0643-46B6-91BE-BA44B367E159}</Project>
+      <Name>GettextLib</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

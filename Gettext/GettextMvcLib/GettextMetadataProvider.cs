@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Web.Mvc;
+using GettextMvcLib.HttpContextHelper;
 
 namespace GettextMvcLib
 {
@@ -28,7 +29,9 @@ namespace GettextMvcLib
 
             //Console.WriteLine(propertyName);
             //Console.WriteLine("display name: " + metadataForProperty.DisplayName);
-            metadataForProperty.DisplayName = Utils.PseudoTranslate(metadataForProperty.DisplayName);
+            
+            //metadataForProperty.DisplayName = Utils.PseudoTranslate(metadataForProperty.DisplayName);
+            metadataForProperty.DisplayName = S._(metadataForProperty.DisplayName);
 
             return metadataForProperty;
         }

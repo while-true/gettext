@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Text;
+using GettextLib;
 using NUnit.Framework;
 
 namespace GettextTests
@@ -19,10 +20,10 @@ namespace GettextTests
 
             //ScannerDump(f);
 
-            var scanner = new Gettext.PoScanner.Scanner();
+            var scanner = new GettextLib.Parser.Scanner();
             scanner.SetSource(f, 0);
-            
-            var parser = new Gettext.PoScanner.Parser(scanner);
+
+            var parser = new GettextLib.Parser.Parser(scanner);
             parser.Parse();
 
             var catalog = parser.Catalog;
@@ -35,20 +36,20 @@ namespace GettextTests
 
         private void ScannerDump(string str)
         {
-            var scanner = new Gettext.PoScanner.Scanner();
+            var scanner = new GettextLib.Parser.Scanner();
             scanner.SetSource(str, 0);
 
             int tok;
             do
             {
                 tok = scanner.yylex();
-                if (Enum.IsDefined(typeof(Gettext.PoScanner.Tokens), tok))
+                if (Enum.IsDefined(typeof(GettextLib.Parser.Tokens), tok))
                 {
-                    var t = (Gettext.PoScanner.Tokens) tok;
+                    var t = (GettextLib.Parser.Tokens)tok;
 
                     Console.WriteLine("Token " + t);
                 }
-            } while (tok > (int) Gettext.PoScanner.Tokens.EOF);
+            } while (tok > (int)GettextLib.Parser.Tokens.EOF);
         }
     }
 }
