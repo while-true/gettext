@@ -13,7 +13,6 @@ namespace GettextMvcSample
 
     public class MvcApplication : System.Web.HttpApplication
     {
-
         public static void RegisterGlobalFilters(GlobalFilterCollection filters)
         {
             filters.Add(new HandleErrorAttribute());
@@ -38,19 +37,8 @@ namespace GettextMvcSample
             RegisterGlobalFilters(GlobalFilters.Filters);
             RegisterRoutes(RouteTable.Routes);
 
-            var defaultMetadataProvider = new DataAnnotationsModelMetadataProvider();
-            var gettextMetadataProvider = new GettextMetadataProvider(defaultMetadataProvider);
-            ModelMetadataProviders.Current = gettextMetadataProvider;
-
-            var mvp = ModelValidatorProviders.Providers.ToList();
-            ModelValidatorProviders.Providers.Clear();
-            foreach (var modelValidatorProvider in mvp)
-            {
-                var gmvp = new GettextModelValidatorProvider(modelValidatorProvider);
-                ModelValidatorProviders.Providers.Add(gmvp);
-            }
-
-            var a = 1;
+            GettextMvcIntegration.InstallGettextMetadataProviderWrapper();
+            GettextMvcIntegration.InstallGettextModelValidatorProviderWrappers();
         }
     }
 }

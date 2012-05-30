@@ -13,6 +13,8 @@
 
 <p>@Html._("Hello world from Razor View!")</p>
 
+<p>@Html._("{fileCount} file", "{fileCount} files", 1).FormatWith(new {fileCount = 1})</p>
+
 <p>@Model.Message</p>
 
 <p>

@@ -48,10 +48,12 @@
     <Compile Include="GettextMetadataProvider.cs" />
     <Compile Include="GettextModelValidator.cs" />
     <Compile Include="GettextModelValidatorProvider.cs" />
+    <Compile Include="GettextMvcIntegration.cs" />
     <Compile Include="GettextTranslationContext.cs" />
     <Compile Include="HttpContextHelper\S.cs" />
     <Compile Include="MvcHtmlHelper\GettextExtensions.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="StringFormatWith.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\GettextLib\GettextLib.csproj">

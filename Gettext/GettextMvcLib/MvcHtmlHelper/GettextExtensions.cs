@@ -23,5 +23,10 @@ namespace GettextMvcLib.MvcHtmlHelper
         {
             return GetGettext(helper)._(str);
         }
+
+        public static string _(this HtmlHelper helper, string msgid, string msgidPlural, int n)
+        {
+            return GetGettext(helper).NGettext(msgid, msgidPlural, n);
+        }
     }
 }

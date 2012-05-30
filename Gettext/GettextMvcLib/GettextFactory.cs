@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Web.Mvc;
 using GettextLib;
 using GettextLib.Catalog;
 using Gettext = GettextLib.Gettext;
@@ -55,6 +56,15 @@ namespace GettextMvcLib
         public GettextTranslationContext GetPseudoContext()
         {
             return GetContext(Consts.GettextPseudoLanguage);
+        }
+
+        public void SetAsContextForCurrentRequest(GettextTranslationContext ctx, ViewDataDictionary viewData)
+        {
+            if (ctx == null) throw new ArgumentNullException("ctx");
+            if (viewData == null) throw new ArgumentNullException("viewData");
+
+            viewData.Add(Consts.GettextContextKey, ctx);
+            System.Web.HttpContext.Current.Items[Consts.GettextContextKey] = ctx;
         }
     }
 }

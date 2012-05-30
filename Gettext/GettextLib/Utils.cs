@@ -1,4 +1,8 @@
-﻿namespace GettextLib
+﻿using System;
+using System.Collections.Generic;
+using System.Text.RegularExpressions;
+
+namespace GettextLib
 {
     public static class Utils
     {

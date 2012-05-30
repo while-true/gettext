@@ -22,7 +22,9 @@ namespace GettextMvcSample.Models.Home
 
         public IndexAnotherModel AnotherModel { get; set; }
 
-        public List<string> PluralStrings { get; set; } 
+        public List<string> PluralStrings { get; set; }
+
+        public string Message2 { get; set; }
 
         public class IndexAnotherModel : BaseModel, IValidatableObject
         {

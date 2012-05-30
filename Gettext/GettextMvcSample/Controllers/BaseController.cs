@@ -21,10 +21,7 @@ namespace GettextMvcSample.Controllers
 
             gc = gf.GetContext("sl_SI");
 
-            //gc = gf.GetPseudoContext();
-
-            ViewData.Add(Consts.GettextContextKey, gc);
-            System.Web.HttpContext.Current.Items[Consts.GettextContextKey] = gc;
+            gf.SetAsContextForCurrentRequest(gc, ViewData);
         }
     }
 }
