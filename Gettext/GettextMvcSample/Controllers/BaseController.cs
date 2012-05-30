@@ -9,8 +9,6 @@ namespace GettextMvcSample.Controllers
 {
     public abstract class BaseController : Controller
     {
-        protected GettextTranslationContext gc;
-
         public BaseController()
         {
             var gf = new GettextFactory();
@@ -19,7 +17,7 @@ namespace GettextMvcSample.Controllers
 
             gf.AddTranslation("sl_SI", System.IO.File.ReadAllText(mapPath));
 
-            gc = gf.GetContext("sl_SI");
+            var gc = gf.GetContext("sl_SI");
 
             gf.SetAsContextForCurrentRequest(gc, ViewData);
         }
