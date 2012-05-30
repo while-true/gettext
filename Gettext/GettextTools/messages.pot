@@ -9,7 +9,7 @@ msgstr ""
 "#-#-#-#-#  messages-code.pot (PACKAGE VERSION)  #-#-#-#-#\n"
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2012-05-30 14:43+0200\n"
+"POT-Creation-Date: 2012-05-30 14:56+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -32,7 +32,7 @@ msgstr ""
 "#-#-#-#-#  messages-razor-views.pot (PACKAGE VERSION)  #-#-#-#-#\n"
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2012-05-30 14:43+0200\n"
+"POT-Creation-Date: 2012-05-30 14:56+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -40,19 +40,24 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=CHARSET\n"
 "Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=INTEGER; plural=EXPRESSION;\n"
 
-#: ..\GettextMvcSample\\Controllers\HomeController.cs:17
+#: ..\GettextMvcSample\\Controllers\HomeController.cs:18
 msgid "Hello world from Controller code!"
 msgstr ""
 
-#: ..\GettextMvcSample\\Controllers\HomeController.cs:27
-#, csharp-format
-msgid "{0} file"
-msgid_plural "{0} files"
+#: ..\GettextMvcSample\\Controllers\HomeController.cs:21
+msgid "Hello {username}!"
+msgstr ""
+
+#: ..\GettextMvcSample\\Controllers\HomeController.cs:30
+#: ..\GettextMvcSample\\Views\Home\Index.cshtml:16
+msgid "{fileCount} file"
+msgid_plural "{fileCount} files"
 msgstr[0] ""
 msgstr[1] ""
 
-#: ..\GettextMvcSample\\Models\Home\IndexModel.cs:36
+#: ..\GettextMvcSample\\Models\Home\IndexModel.cs:38
 msgid "Hello world from custom validator"
 msgstr ""
 

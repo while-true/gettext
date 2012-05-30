@@ -17,8 +17,14 @@ namespace GettextMvcSample.Controllers
 
             gf.AddTranslation("sl_SI", System.IO.File.ReadAllText(mapPath));
 
-            var gc = gf.GetContext("sl_SI");
+            if (false)
+            {
+                var gp = gf.GetPseudoContext();
+                gf.SetAsContextForCurrentRequest(gp, ViewData);
+                return;
+            }
 
+            var gc = gf.GetContext("sl_SI");
             gf.SetAsContextForCurrentRequest(gc, ViewData);
         }
     }
