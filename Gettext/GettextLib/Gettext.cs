@@ -29,7 +29,8 @@ namespace GettextLib
 
         public string NGettext(string msgid, string msgidPlural, int n)
         {
-            throw new NotImplementedException();
+            // dummy 
+            return n == 1 ? msgid : msgidPlural;
         }
     }
 }

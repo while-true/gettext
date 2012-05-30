@@ -48,8 +48,10 @@ namespace GettextExtractorApp
                 }
             }
 
-            File.WriteAllText("messages.po", ext.ToPoString(), Encoding.UTF8);
-            Console.WriteLine("Wrote messages.po");
+            var poFile = "messages-data-annotations.pot";
+            var enc = new UTF8Encoding(false);
+            File.WriteAllText(poFile, ext.ToPoString(), enc);
+            Console.WriteLine("Wrote " + poFile);
 
         }
     }

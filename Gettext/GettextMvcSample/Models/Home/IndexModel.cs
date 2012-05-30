@@ -22,6 +22,8 @@ namespace GettextMvcSample.Models.Home
 
         public IndexAnotherModel AnotherModel { get; set; }
 
+        public List<string> PluralStrings { get; set; } 
+
         public class IndexAnotherModel : BaseModel, IValidatableObject
         {
             [Display(Name = "Password")]
@@ -42,7 +44,7 @@ namespace GettextMvcSample.Models.Home
 
         public IndexModel()
         {
-            
+            PluralStrings = new List<string>();
         }
     }
 

@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using GettextLib;
-using Gettext = GettextLib.Gettext;
 
 namespace GettextMvcLib.HttpContextHelper
 {
@@ -21,6 +20,11 @@ namespace GettextMvcLib.HttpContextHelper
         public static string _(string msgid)
         {
             return GetGettext()._(msgid);
+        }
+
+        public static string _(string msgid, string msgidPlural, int n)
+        {
+            return GetGettext().NGettext(msgid, msgidPlural, n);
         }
     }
 }

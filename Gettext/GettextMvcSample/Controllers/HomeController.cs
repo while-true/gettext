@@ -22,6 +22,12 @@ namespace GettextMvcSample.Controllers
                                          Password = "abcd"
                                      };
 
+            for (var i = 0; i < 4; i++)
+            {
+                var plural = string.Format(S._("{0} file", "{0} files", i), i);
+                model.PluralStrings.Add(plural);
+            }
+
             TryValidateModel(model);
             
             

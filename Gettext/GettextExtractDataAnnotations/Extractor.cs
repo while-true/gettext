@@ -37,6 +37,26 @@ namespace GettextExtractDataAnnotations
         {
             var sb = new StringBuilder();
 
+            sb.Append(@"# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+#, fuzzy
+msgid """"
+msgstr """"
+""Project-Id-Version: PACKAGE VERSION\n""
+""Report-Msgid-Bugs-To: \n""
+""POT-Creation-Date: 2012-05-30 12:08+0200\n""
+""PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n""
+""Last-Translator: FULL NAME <EMAIL@ADDRESS>\n""
+""Language-Team: LANGUAGE <LL@li.org>\n""
+""Language: \n""
+""MIME-Version: 1.0\n""
+""Content-Type: text/plain; charset=CHARSET\n""
+""Content-Transfer-Encoding: 8bit\n""");
+            sb.Append("\n\n");
+
             foreach (var translationString in translations)
             {
                 sb.AppendFormat("msgid \"{0}\"\n", Escape(translationString.Str));
@@ -68,6 +88,10 @@ namespace GettextExtractDataAnnotations
         private void AddTranslation(string str)
         {
             if (string.IsNullOrWhiteSpace(str)) return;
+
+            var p = translations.SingleOrDefault(x => x.Str == str);
+            if (p != null) return;
+
             translations.Add(new TranslationString(str));
         }
 

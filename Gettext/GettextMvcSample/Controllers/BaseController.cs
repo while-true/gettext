@@ -17,11 +17,11 @@ namespace GettextMvcSample.Controllers
 
             var mapPath = System.Web.HttpContext.Current.Server.MapPath("~/po/sl_SI/messages.po");
 
-            //gf.AddTranslation("sl_SI", System.IO.File.ReadAllText(mapPath));
+            gf.AddTranslation("sl_SI", System.IO.File.ReadAllText(mapPath));
 
-            //gc = gf.GetContext("sl_SI");
+            gc = gf.GetContext("sl_SI");
 
-            gc = gf.GetPseudoContext();
+            //gc = gf.GetPseudoContext();
 
             ViewData.Add(Consts.GettextContextKey, gc);
             System.Web.HttpContext.Current.Items[Consts.GettextContextKey] = gc;
