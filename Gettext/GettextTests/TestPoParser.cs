@@ -56,33 +56,68 @@ namespace GettextTests
         [Test]
         public void TestExpressionExecution()
         {
-            var expr = "nplurals=4; plural=n%100==1 ? 0 : n%100==2 ? 1 : n%100==3 || n%100==4 ? 2 : 3;";
-            Console.WriteLine(expr);
+            var expressions = new[]
+                               {
+                                   
+"plural=n == 1 ? 0 : 1;",
+"plural=0;",
+"plural=n != 1;",
+"plural=n>1;",
+"plural=n%10==1 && n%100!=11 ? 0 : n != 0 ? 1 : 2;",
+"plural=n==1 ? 0 : n==2 ? 1 : 2;",
+"plural=n==1 ? 0 : (n==0 || (n%100 > 0 && n%100 < 20)) ? 1 : 2;",
+"plural=n%10==1 && n%100!=11 ? 0 : n%10>=2 && (n%100<10 || n%100>=20) ? 1 : 2;",
+"plural=n%10==1 && n%100!=11 ? 0 : n%10>=2 && n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2;",
+"plural=(n==1) ? 0 : (n>=2 && n<=4) ? 1 : 2;",
+"plural=n==1 ? 0 : n%10>=2 && n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2;",
+"plural=n%100==1 ? 0 : n%100==2 ? 1 : n%100==3 || n%100==4 ? 2 : 3;"
+                        
 
-            var sc = new Scanner();
-            sc.SetSource(expr, 0);
+                                  };
 
-            var p = new Parser(sc);
 
-            p.Parse();
-
-            var scr = p.Script;
-            Console.WriteLine(scr.ToPrint());
-
-            var tests = new[]
+            var testsFunc = new Func<int, int>[]
                             {
-                                0, 1, 2, 3, 4, 100, 101, 102, 103, 104
+                                n => n == 1 ? 0 : 1,
+                                n => 0,
+                                n => (n != 1) ? 1 : 0,
+                                n => (n > 1) ? 1 : 0,
+                                n => n%10 == 1 && n%100 != 11 ? 0 : n != 0 ? 1 : 2,
+                                n => n == 1 ? 0 : n == 2 ? 1 : 2,
+                                n => n == 1 ? 0 : (n == 0 || (n%100 > 0 && n%100 < 20)) ? 1 : 2,
+                                n => n%10 == 1 && n%100 != 11 ? 0 : n%10 >= 2 && (n%100 < 10 || n%100 >= 20) ? 1 : 2,
+                                n =>
+                                n%10 == 1 && n%100 != 11
+                                    ? 0
+                                    : n%10 >= 2 && n%10 <= 4 && (n%100 < 10 || n%100 >= 20) ? 1 : 2,
+                                n => (n == 1) ? 0 : (n >= 2 && n <= 4) ? 1 : 2,
+                                n => n == 1 ? 0 : n%10 >= 2 && n%10 <= 4 && (n%100 < 10 || n%100 >= 20) ? 1 : 2,
+                                n => n%100 == 1 ? 0 : n%100 == 2 ? 1 : n%100 == 3 || n%100 == 4 ? 2 : 3
                             };
 
-            
 
-            foreach (var test in tests)
+            for (var i = 0; i < expressions.Length; i++)
             {
+                var sc = new Scanner();
+                sc.SetSource(expressions[i], 0);
 
-                var s = new ExpressionState();
-                s.SetVar("n", test);
-                scr.Execute(s);
-                Console.WriteLine(s.PrintState());
+                var p = new Parser(sc);
+
+                p.Parse();
+
+                var scr = p.Script;
+
+                for (var j = 0; j < 1000; j++)
+                {
+                    var state = new ExpressionState();
+                    state.SetVar("n", j);
+                    scr.Execute(state);
+                    var ours = state.GetVar("plural");
+
+                    var b = testsFunc[i](j);
+
+                    Assert.That(ours, Is.EqualTo(b));
+                }
             }
 
         }
@@ -92,6 +127,7 @@ namespace GettextTests
         {
             var expressions = new[]
                                {
+                                   /*
 "nplurals=2;",
 "nplurals=2; plural=n == 1 ? 0 : 1;",
 "nplurals=1; plural=0;",
@@ -105,6 +141,11 @@ namespace GettextTests
 "nplurals=3; plural=(n==1) ? 0 : (n>=2 && n<=4) ? 1 : 2;",
 "nplurals=3; plural=n==1 ? 0 : n%10>=2 && n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2;",
 "nplurals=4; plural=n%100==1 ? 0 : n%100==2 ? 1 : n%100==3 || n%100==4 ? 2 : 3;"
+                                    */
+
+
+                                   "plural= n%100==1 ? 0 : n%100==2 ? 1 : 3;"
+
                                   };
 
 
@@ -142,18 +183,7 @@ namespace GettextTests
 
             
         }
-
-        [Test]
-        public void TestE()
-        {
-            var n = 0;
-            int plural;
-
-            plural = n%100 == 1 ? 0 : ((((((n)%(100))) == (2))) ? (1) : ((((((((n)%(100))) == (3))) || (((((n)%(100))) == (4))))) ? (2) : (3)));
-
-            Console.WriteLine(plural);
-        }
-
+        
         private void ScannerEvalDump(string str)
         {
             var scanner = new GettextLib.ExpressionEvaluator.Scanner();
