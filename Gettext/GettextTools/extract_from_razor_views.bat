@@ -3,7 +3,10 @@ IF [%1]==[] (
 	echo Missing directory
 	goto QUITCODE
 )
+
+call extract_vars.bat
+
 find %1 -iname "*.cshtml" | sed "s/\//\\/g" > files.txt
-xgettext -f files.txt --from-code=UTF-8 --language=C# --keyword=_ --keyword=_:1,2 -o messages-razor-views.pot
+xgettext -f files.txt %xgettext_options% -o messages-razor-views.pot
 
 :QUITCODE

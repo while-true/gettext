@@ -3,7 +3,10 @@ IF [%1]==[] (
 	echo Missing directory
 	goto QUITCODE
 )
+
+call extract_vars.bat
+
 find %1 -iname "*.cs" | sed "s/\//\\/g" > files.txt
-xgettext -f files.txt --from-code=UTF-8 --language=C# --keyword=_ --keyword=_:1,2 -o messages-code.pot
+xgettext -f files.txt %xgettext_options% -o messages-code.pot
 
 :QUITCODE

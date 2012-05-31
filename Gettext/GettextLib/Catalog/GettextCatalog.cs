@@ -85,6 +85,10 @@ namespace GettextLib.Catalog
             Lines.Add(line);
         }
 
-        public string String { get { return string.Join("", Lines ?? new List<string>()); } }
+        public string String { get
+        {
+            if (Lines == null || Lines.Count == 0) return string.Empty;
+            return string.Join("", Lines);
+        } }
     }
 }

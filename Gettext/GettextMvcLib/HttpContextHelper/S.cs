@@ -22,9 +22,19 @@ namespace GettextMvcLib.HttpContextHelper
             return GetGettext()._(msgid);
         }
 
-        public static string _(string msgid, string msgidPlural, int n)
+        public static string _(string msgid, string msgidPlural, long n)
         {
             return GetGettext().NGettext(msgid, msgidPlural, n);
+        }
+
+        public static string PGettext(string msgctxt, string msgid)
+        {
+            return GetGettext().PGettext(msgctxt, msgid);
+        }
+
+        public static string PNGettext(string msgctxt, string msgid, string msgidPlural, long n)
+        {
+            return GetGettext().PNGettext(msgctxt, msgid, msgidPlural, n);
         }
     }
 }

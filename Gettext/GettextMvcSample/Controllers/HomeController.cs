@@ -13,6 +13,10 @@ namespace GettextMvcSample.Controllers
     {
         public ActionResult Index()
         {
+            var str = S.PGettext("context 1", "test1");
+            var str2 = S.PNGettext("context 2", "test", "tests", 234);
+
+
             var model = new IndexModel();
 
             model.Message = S._("Hello world from Controller code!");

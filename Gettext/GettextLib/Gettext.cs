@@ -16,21 +16,39 @@ namespace GettextLib
             this.catalog = catalog;
         }
 
-        public string _(string msgid)
+        private Translation.TranslationString Lookup(string context, string msgid)
         {
-            // find the original string
-            var translation = catalog.Translations.SingleOrDefault(x => x.MessageId.String == msgid);
-            if (translation == null) return msgid;
-            var t = translation.MessageTranslations.FirstOrDefault(x => x.Index == 0);
-            if (t == null) return msgid;
+            context = context ?? string.Empty;
+            var translation = catalog.Translations.SingleOrDefault(x => string.Equals(msgid, x.MessageId.String) && string.Equals(context, x.MessageContext.String));
+            if (translation == null) return null;
 
-            return t.Message.String;
+            var t = translation.MessageTranslations.FirstOrDefault(x => x.Index == 0);
+            return t;
         }
 
-        public string NGettext(string msgid, string msgidPlural, int n)
+        public string _(string msgid)
+        {
+            var l = Lookup(null, msgid);
+            if (l == null) return msgid;
+            return l.Message.String;
+        }
+
+        public string NGettext(string msgid, string msgidPlural, long n)
         {
             // dummy 
             return n == 1 ? msgid : msgidPlural;
+        }
+
+        public string PGettext(string msgctxt, string msgid)
+        {
+            var l = Lookup(msgctxt, msgid);
+            if (l == null) return msgid;
+            return l.Message.String;
+        }
+
+        public string PNGettext(string msgctxt, string msgid, string msgidPlural, long n)
+        {
+            throw new NotImplementedException();
         }
     }
 }
