@@ -140,7 +140,7 @@ namespace GettextTests
                 Console.WriteLine();
             }
 
-
+            
         }
 
         [Test]
@@ -149,7 +149,7 @@ namespace GettextTests
             var n = 0;
             int plural;
 
-            plural = ((n)%(100)) == (1) ? 0 : ((n)%(100)) == (2) ? 1 : (((n)%(100)) == (3)) || (((n)%(100)) == (4)) ? 2 : 3;
+            plural = n%100 == 1 ? 0 : ((((((n)%(100))) == (2))) ? (1) : ((((((((n)%(100))) == (3))) || (((((n)%(100))) == (4))))) ? (2) : (3)));
 
             Console.WriteLine(plural);
         }

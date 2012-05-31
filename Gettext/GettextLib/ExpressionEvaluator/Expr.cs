@@ -118,7 +118,7 @@ namespace GettextLib.ExpressionEvaluator
 
         public override string ToPrint()
         {
-            return string.Format("{0}", expr.ToPrint());
+            return string.Format("({0})", expr.ToPrint());
         }
 
         public override long Execute(ExpressionState state)
@@ -242,7 +242,7 @@ namespace GettextLib.ExpressionEvaluator
 
         public override string ToPrint()
         {
-            return string.Format("({0}) {1} ({2})", left.ToPrint(), ToPrint(op), right.ToPrint());
+            return string.Format("(({0}) {1} ({2}))", left.ToPrint(), ToPrint(op), right.ToPrint());
         }
 
         public override long Execute(ExpressionState state)
@@ -299,7 +299,7 @@ namespace GettextLib.ExpressionEvaluator
 
         public override string ToPrint()
         {
-            return string.Format("{0} ? {1} : {2}", condition.ToPrint(), statement1.ToPrint(), statement2.ToPrint());
+            return string.Format("({0}) ? ({1}) : ({2})", condition.ToPrint(), statement1.ToPrint(), statement2.ToPrint());
         }
 
         public override long Execute(ExpressionState state)
