@@ -4,6 +4,7 @@ using System.IO;
 using System.Linq;
 using System.Text;
 using GettextLib;
+using GettextLib.ExpressionEvaluator;
 using NUnit.Framework;
 
 namespace GettextTests
@@ -53,6 +54,37 @@ namespace GettextTests
         }
 
         [Test]
+        public void TestExpressionExecution()
+        {
+            var expr = "nplurals=4; plural=n%100==1 ? 0 : n%100==2 ? 1 : n%100==3 || n%100==4 ? 2 : 3;";
+
+            var sc = new Scanner();
+            sc.SetSource(expr, 0);
+
+            var p = new Parser(sc);
+
+            p.Parse();
+
+            var scr = p.Script;
+            Console.WriteLine(scr.ToPrint());
+
+            var tests = new[]
+                            {
+                                0, 1, 2, 3, 4, 100, 101, 102, 103, 104
+                            };
+
+            foreach (var test in tests)
+            {
+
+                var s = new ExpressionState();
+                s.SetVar("n", test);
+                scr.Execute(s);
+                Console.WriteLine(s.PrintState());
+            }
+
+        }
+
+        [Test]
         public void TestExpressionParser()
         {
             var expressions = new[]
@@ -83,15 +115,20 @@ namespace GettextTests
                 //ScannerEvalDump(expression);
 
                 {
-                    var sc = new GettextLib.ExpressionEvaluator.Scanner();
+                    var sc = new Scanner();
                     sc.SetSource(expression, 0);
 
-                    var p = new GettextLib.ExpressionEvaluator.Parser(sc);
+                    var p = new Parser(sc);
 
                     p.Parse();
 
                     var scr = p.Script;
                     Console.WriteLine(scr.ToPrint());
+
+                    var s = new ExpressionState();
+                    s.SetVar("n", 2);
+                    scr.Execute(s);
+                    Console.WriteLine(s.PrintState());
                 }
 
 

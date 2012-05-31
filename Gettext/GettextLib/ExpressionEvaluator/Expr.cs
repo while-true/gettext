@@ -5,7 +5,48 @@ using System.Text;
 
 namespace GettextLib.ExpressionEvaluator
 {
-    internal class Script : IOutput
+    internal class ExpressionState
+    {
+        private Dictionary<string, long> variables;
+
+        internal ExpressionState()
+        {
+            variables = new Dictionary<string, long>();
+        }
+
+        public void SetVar(string i, long val)
+        {
+            if (!variables.ContainsKey(i))
+            {
+                variables.Add(i, val);
+                return;
+            }
+
+            variables[i] = val;
+        }
+
+        public long GetVar(string i)
+        {
+            if (!variables.ContainsKey(i))
+            {
+                throw new Exception(string.Format("No variable {0} set!", i));
+            }
+
+            return variables[i];
+        }
+
+        public string PrintState()
+        {
+            var sb = new StringBuilder();
+            foreach (var variable in variables)
+            {
+                sb.AppendFormat("{0}={1}\n", variable.Key, variable.Value);
+            }
+            return sb.ToString();
+        }
+    }
+
+    internal class Script : IExpr
     {
         public List<Assignment> Assignments { get; set; } 
 
@@ -18,14 +59,25 @@ namespace GettextLib.ExpressionEvaluator
         {
             return string.Join("; ", Assignments.Select(x => x.ToPrint()));
         }
+
+        public long Execute(ExpressionState state)
+        {
+            foreach (var assignment in Assignments)
+            {
+                assignment.Execute(state);
+            }
+
+            return 0;
+        }
     }
 
-    internal interface IOutput
+    internal interface IExpr
     {
         string ToPrint();
+        long Execute(ExpressionState state);
     }
 
-    internal class Assignment : IOutput
+    internal class Assignment : IExpr
     {
         public string Var { get; set; }
         public Expr Expr { get; set; }
@@ -40,11 +92,19 @@ namespace GettextLib.ExpressionEvaluator
         {
             return string.Format("{0} = {1};", Var, Expr.ToPrint());
         }
+
+        public long Execute(ExpressionState state)
+        {
+            var execute = Expr.Execute(state);
+            state.SetVar(Var, execute);
+            return execute;
+        }
     }
 
-    internal abstract class Expr : IOutput
+    internal abstract class Expr : IExpr
     {
         public abstract string ToPrint();
+        public abstract long Execute(ExpressionState state);
     }
 
     internal class ExprWrapper : Expr
@@ -59,6 +119,11 @@ namespace GettextLib.ExpressionEvaluator
         public override string ToPrint()
         {
             return string.Format("({0})", expr.ToPrint());
+        }
+
+        public override long Execute(ExpressionState state)
+        {
+            return expr.Execute(state);
         }
     }
 
@@ -80,6 +145,11 @@ namespace GettextLib.ExpressionEvaluator
         {
             return num.ToString();
         }
+
+        public override long Execute(ExpressionState state)
+        {
+            return num;
+        }
     }
 
     internal class LiteralVar : Literal
@@ -95,6 +165,11 @@ namespace GettextLib.ExpressionEvaluator
         public override string ToPrint()
         {
             return id;
+        }
+
+        public override long Execute(ExpressionState state)
+        {
+            return state.GetVar(id);
         }
     }
 
@@ -167,7 +242,45 @@ namespace GettextLib.ExpressionEvaluator
 
         public override string ToPrint()
         {
-            return string.Format("{0} {1} {2}", left.ToPrint(), ToPrint(op), right.ToPrint());
+            return string.Format("({0} {1} {2})", left.ToPrint(), ToPrint(op), right.ToPrint());
+        }
+
+        public override long Execute(ExpressionState state)
+        {
+            switch (op)
+            {
+                case OpEnum.Equals:
+                    return (left.Execute(state) == right.Execute(state)) ? 1 : 0;
+                case OpEnum.NotEquals:
+                    return (left.Execute(state) == right.Execute(state)) ? 0 : 1;
+                    break;
+                case OpEnum.And:
+                    return (left.Execute(state) == 1 && right.Execute(state) == 1) ? 1 : 0;
+                    break;
+                case OpEnum.Minus:
+                    return left.Execute(state) - right.Execute(state);
+                    break;
+                case OpEnum.Modulo:
+                    return left.Execute(state) % right.Execute(state);
+                    break;
+                case OpEnum.Or:
+                    return (left.Execute(state) == 1 || right.Execute(state) == 1) ? 1 : 0;
+                    break;
+                case OpEnum.LessThan:
+                    return (left.Execute(state) < right.Execute(state)) ? 1 : 0;
+                    break;
+                case OpEnum.GreaterThan:
+                    return (left.Execute(state) > right.Execute(state)) ? 1 : 0;
+                    break;
+                case OpEnum.LessThanOrEquals:
+                    return (left.Execute(state) <= right.Execute(state)) ? 1 : 0;
+                    break;
+                case OpEnum.GreaterThanOrEquals:
+                    return (left.Execute(state) >= right.Execute(state)) ? 1 : 0;
+                    break;
+                default:
+                    throw new ArgumentOutOfRangeException();
+            }
         }
     }
 
@@ -187,6 +300,11 @@ namespace GettextLib.ExpressionEvaluator
         public override string ToPrint()
         {
             return string.Format("({0}) ? ({1}) : ({2})", condition.ToPrint(), statement1.ToPrint(), statement2.ToPrint());
+        }
+
+        public override long Execute(ExpressionState state)
+        {
+            return (condition.Execute(state) == 1) ? statement1.Execute(state) : statement2.Execute(state);
         }
     }
 }

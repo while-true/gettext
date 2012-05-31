@@ -45,22 +45,15 @@
 %type <Expr> Expr
 %type <Literal> Literal
 
-%left ASSIGN
-%left MINUS PLUS
-%left MUL DIV
-%left PERCENT
-%left AND
-%left OR
-%right NOT
-%left EQUALS
-%left NOTEQUALS
-%left LT
-%left GT
-%left LTEQUALS
-%left GTEQUALS
-
 %right QUESTIONMARK
-%left COLON
+%left OR
+%left AND
+%left EQUALS NOTEQUALS
+%left LT GT LTEQUALS GTEQUALS
+%left MINUS PLUS
+%left MUL DIV PERCENT
+%right NOT
+
 
 %%
 
@@ -78,26 +71,31 @@ AssigmentExpression
 	;
 
 Expr
-	: LEFTPAR Expr RIGHTPAR { $$ = new ExprWrapper($2); }
-	| Literal { $$ = $1; }
-	| Expr PLUS Expr { $$ = new ExprTwo($1, $3, ExprTwo.OpEnum.And); }
-	| Expr MINUS Expr { $$ = new ExprTwo($1, $3, ExprTwo.OpEnum.Minus); }
-	| MINUS Expr %prec MUL { ; }
-	| Expr MUL Expr { ; }
-	| Expr DIV Expr { ; }
-	| Expr PERCENT Expr { $$ = new ExprTwo($1, $3, ExprTwo.OpEnum.Modulo); }
-	| Expr AND Expr { $$ = new ExprTwo($1, $3, ExprTwo.OpEnum.And); }
+	: Expr QUESTIONMARK Expr COLON Expr { $$ = new ExprIf($1, $3, $5); }
 	| Expr OR Expr { $$ = new ExprTwo($1, $3, ExprTwo.OpEnum.Or); }
-	| Expr NOT Expr { ; }
+	| Expr AND Expr { $$ = new ExprTwo($1, $3, ExprTwo.OpEnum.And); }
+	
 	| Expr EQUALS Expr { $$ = new ExprTwo($1, $3, ExprTwo.OpEnum.Equals); }
 	| Expr NOTEQUALS Expr { $$ = new ExprTwo($1, $3, ExprTwo.OpEnum.NotEquals); }
+	
 	| Expr LT Expr { $$ = new ExprTwo($1, $3, ExprTwo.OpEnum.LessThan); }
 	| Expr GT Expr { $$ = new ExprTwo($1, $3, ExprTwo.OpEnum.GreaterThan); }
 	| Expr LTEQUALS Expr { $$ = new ExprTwo($1, $3, ExprTwo.OpEnum.LessThanOrEquals); }
 	| Expr GTEQUALS Expr { $$ = new ExprTwo($1, $3, ExprTwo.OpEnum.GreaterThanOrEquals); }
-	// ??
-	| Expr QUESTIONMARK Expr COLON Expr { $$ = new ExprIf($1, $3, $5); }
-	;
+	
+	| Expr PLUS Expr { $$ = new ExprTwo($1, $3, ExprTwo.OpEnum.And); }
+	| Expr MINUS Expr { $$ = new ExprTwo($1, $3, ExprTwo.OpEnum.Minus); }
+	
+	| Expr MUL Expr { ; }
+	| Expr DIV Expr { ; }
+	| Expr PERCENT Expr { $$ = new ExprTwo($1, $3, ExprTwo.OpEnum.Modulo); }
+	
+	| Expr NOT Expr { ; }
+	
+	| Literal { $$ = $1; }
+	
+	| LEFTPAR Expr RIGHTPAR { $$ = new ExprWrapper($2); }
+	;	
 
 Literal
 	: IDENTIFIER { $$ = new LiteralVar($1); }
