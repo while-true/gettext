@@ -7,14 +7,14 @@ namespace GettextLib
             return msgid;
         }
 
-        public string PGettext(string msgctxt, string msgid)
+        public virtual string PGettext(string msgctxt, string msgid)
         {
-            throw new System.NotImplementedException();
+            return msgid;
         }
 
-        public string PNGettext(string msgctxt, string msgid, string msgidPlural, long n)
+        public virtual string PNGettext(string msgctxt, string msgid, string msgidPlural, long n)
         {
-            throw new System.NotImplementedException();
+            return n == 1 ? msgid : msgidPlural;
         }
 
         public virtual string NGettext(string msgid, string msgidPlural, long n)

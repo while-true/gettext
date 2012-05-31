@@ -41,6 +41,9 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Catalog\GettextCatalog.cs" />
+    <Compile Include="ExpressionEvaluator\EvalLexer.cs" />
+    <Compile Include="ExpressionEvaluator\EvalParser.cs" />
+    <Compile Include="ExpressionEvaluator\Expr.cs" />
     <Compile Include="Gettext.cs" />
     <Compile Include="GettextDummy.cs" />
     <Compile Include="GettextPseudo.cs" />

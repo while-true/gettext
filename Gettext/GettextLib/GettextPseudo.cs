@@ -11,5 +11,15 @@ namespace GettextLib
         {
             return Utils.PseudoTranslate(base.NGettext(msgid, msgidPlural, n));
         }
+
+        public override string PGettext(string msgctxt, string msgid)
+        {
+            return Utils.PseudoTranslate(base.PGettext(msgctxt, msgid));
+        }
+
+        public override string PNGettext(string msgctxt, string msgid, string msgidPlural, long n)
+        {
+            return Utils.PseudoTranslate(base.PNGettext(msgctxt, msgid, msgidPlural, n));
+        }
     }
 }
