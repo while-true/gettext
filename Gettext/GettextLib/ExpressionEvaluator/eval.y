@@ -72,6 +72,7 @@ AssigmentExpression
 
 Expr
 	: Expr QUESTIONMARK Expr COLON Expr { $$ = new ExprIf($1, $3, $5); }
+	
 	| Expr OR Expr { $$ = new ExprTwo($1, $3, ExprTwo.OpEnum.Or); }
 	| Expr AND Expr { $$ = new ExprTwo($1, $3, ExprTwo.OpEnum.And); }
 	

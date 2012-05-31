@@ -57,6 +57,7 @@ namespace GettextTests
         public void TestExpressionExecution()
         {
             var expr = "nplurals=4; plural=n%100==1 ? 0 : n%100==2 ? 1 : n%100==3 || n%100==4 ? 2 : 3;";
+            Console.WriteLine(expr);
 
             var sc = new Scanner();
             sc.SetSource(expr, 0);
@@ -72,6 +73,8 @@ namespace GettextTests
                             {
                                 0, 1, 2, 3, 4, 100, 101, 102, 103, 104
                             };
+
+            
 
             foreach (var test in tests)
             {
@@ -138,6 +141,17 @@ namespace GettextTests
             }
 
 
+        }
+
+        [Test]
+        public void TestE()
+        {
+            var n = 0;
+            int plural;
+
+            plural = ((n)%(100)) == (1) ? 0 : ((n)%(100)) == (2) ? 1 : (((n)%(100)) == (3)) || (((n)%(100)) == (4)) ? 2 : 3;
+
+            Console.WriteLine(plural);
         }
 
         private void ScannerEvalDump(string str)

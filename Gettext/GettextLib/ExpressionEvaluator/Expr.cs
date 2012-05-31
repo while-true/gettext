@@ -90,7 +90,7 @@ namespace GettextLib.ExpressionEvaluator
 
         public string ToPrint()
         {
-            return string.Format("{0} = {1};", Var, Expr.ToPrint());
+            return string.Format("{0} = {1}", Var, Expr.ToPrint());
         }
 
         public long Execute(ExpressionState state)
@@ -118,7 +118,7 @@ namespace GettextLib.ExpressionEvaluator
 
         public override string ToPrint()
         {
-            return string.Format("({0})", expr.ToPrint());
+            return string.Format("{0}", expr.ToPrint());
         }
 
         public override long Execute(ExpressionState state)
@@ -242,7 +242,7 @@ namespace GettextLib.ExpressionEvaluator
 
         public override string ToPrint()
         {
-            return string.Format("({0} {1} {2})", left.ToPrint(), ToPrint(op), right.ToPrint());
+            return string.Format("({0}) {1} ({2})", left.ToPrint(), ToPrint(op), right.ToPrint());
         }
 
         public override long Execute(ExpressionState state)
@@ -252,10 +252,10 @@ namespace GettextLib.ExpressionEvaluator
                 case OpEnum.Equals:
                     return (left.Execute(state) == right.Execute(state)) ? 1 : 0;
                 case OpEnum.NotEquals:
-                    return (left.Execute(state) == right.Execute(state)) ? 0 : 1;
+                    return (left.Execute(state) != right.Execute(state)) ? 1 : 0;
                     break;
                 case OpEnum.And:
-                    return (left.Execute(state) == 1 && right.Execute(state) == 1) ? 1 : 0;
+                    return ((left.Execute(state) == 1) && (right.Execute(state) == 1)) ? 1 : 0;
                     break;
                 case OpEnum.Minus:
                     return left.Execute(state) - right.Execute(state);
@@ -264,7 +264,7 @@ namespace GettextLib.ExpressionEvaluator
                     return left.Execute(state) % right.Execute(state);
                     break;
                 case OpEnum.Or:
-                    return (left.Execute(state) == 1 || right.Execute(state) == 1) ? 1 : 0;
+                    return ((left.Execute(state) == 1) || (right.Execute(state) == 1)) ? 1 : 0;
                     break;
                 case OpEnum.LessThan:
                     return (left.Execute(state) < right.Execute(state)) ? 1 : 0;
@@ -299,7 +299,7 @@ namespace GettextLib.ExpressionEvaluator
 
         public override string ToPrint()
         {
-            return string.Format("({0}) ? ({1}) : ({2})", condition.ToPrint(), statement1.ToPrint(), statement2.ToPrint());
+            return string.Format("{0} ? {1} : {2}", condition.ToPrint(), statement1.ToPrint(), statement2.ToPrint());
         }
 
         public override long Execute(ExpressionState state)
