@@ -1,16 +1,29 @@
 ﻿using System;
 using System.Collections.Generic;
-using GettextLib.Parser;
+using System.Linq;
+using System.Text.RegularExpressions;
+using GettextLib.ExpressionEvaluator;
+using Scanner = GettextLib.Parser.Scanner;
 
 namespace GettextLib.Catalog
 {
     public class GettextCatalog
     {
+        public int NPlurals { get; set; }
+        public Func<long, int> GetPluralIndex { get; set; }
+
         public List<Translation> Translations { get; set; }
 
-        public GettextCatalog()
+        public Dictionary<string, string> Headers { get; private set; }
+
+        public const string PluralFormsHeaderKey = "Plural-Forms";
+
+        internal GettextCatalog()
         {
             Translations = new List<Translation>();
+            NPlurals = 2;
+            GetPluralIndex = n => n == 1 ? 0 : 1;
+            Headers = new Dictionary<string, string>();
         }
 
         public void AddTranslation(Translation translation)
@@ -31,6 +44,7 @@ namespace GettextLib.Catalog
 
         public static GettextCatalog ParseFromPoString(string poString)
         {
+            GettextCatalog catalog = null;
             try
             {
                 var lexer = new Scanner();
@@ -38,11 +52,91 @@ namespace GettextLib.Catalog
                 var parser = new Parser.Parser(lexer);
                 parser.Parse();
 
-                return parser.Catalog;
+                catalog = parser.Catalog;
+
+                if (catalog == null) goto ret;
+
+                // another parsing step
+                catalog.ParseHeaders();
+
 
             } catch (Exception e)
             {
                 throw new Exception("Parsing exception!", e);
+            }
+
+            ret:
+
+            if (catalog == null) throw new Exception("Coudln't parse the catalog");
+            return catalog;
+        }
+
+        private void ParseHeaders()
+        {
+            var header = Translations.SingleOrDefault(x => x.MessageId.String == "");
+            if (header == null) return;
+
+            var t = header.MessageTranslations.SingleOrDefault();
+            if (t == null) return;
+
+            var st = t.Message.String;
+            if (string.IsNullOrWhiteSpace(st)) return;
+
+            var lines = st.Split(new[] {"\n", "\r\n"}, StringSplitOptions.RemoveEmptyEntries);
+            foreach (var line in lines)
+            {
+                var r = new Regex(@"([\w-]+): (.*)", RegexOptions.None);
+                var m = r.Match(line);
+                if (m.Success)
+                {
+                    Headers.Add(m.Groups[1].Value, m.Groups[2].Value);
+                }
+            }
+
+            ParsePluralFormsHeader();
+        }
+
+        private void ParsePluralFormsHeader()
+        {
+            string pluralForms;
+            if (!Headers.TryGetValue(PluralFormsHeaderKey, out pluralForms)) return;
+
+            Script script = null;
+            try
+            {
+                var scanner = new ExpressionEvaluator.Scanner();
+                scanner.SetSource(pluralForms, 0);
+                var parser = new ExpressionEvaluator.Parser(scanner);
+
+                parser.Parse();
+
+                script = parser.Script;
+            } catch (Exception e)
+            {
+                throw new Exception("Error parsing the plural forms header", e);
+            }
+
+            if (script == null) return;
+
+            var assignmentNplurals = script.Assignments.SingleOrDefault(x => x.Var == "nplurals");
+            var assignmentN = script.Assignments.SingleOrDefault(x => x.Var == "plural");
+            if (assignmentNplurals == null || assignmentN == null) return;
+
+            {
+                var state = new ExpressionState();
+                assignmentNplurals.Execute(state);
+                NPlurals = (int) state.GetVar("nplurals");
+            }
+
+            {
+                GetPluralIndex = n =>
+                                     {
+                                         var state = new ExpressionState();
+                                         state.SetVar("nplurals", NPlurals);
+                                         state.SetVar("n", n);
+                                         assignmentN.Execute(state);
+                                         return (int) state.GetVar("plural");
+                                     };
             }
         }
     }

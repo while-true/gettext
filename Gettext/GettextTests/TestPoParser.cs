@@ -4,6 +4,7 @@ using System.IO;
 using System.Linq;
 using System.Text;
 using GettextLib;
+using GettextLib.Catalog;
 using GettextLib.ExpressionEvaluator;
 using NUnit.Framework;
 
@@ -201,5 +202,25 @@ namespace GettextTests
                 }
             } while (tok > (int)GettextLib.ExpressionEvaluator.Tokens.EOF);
         }
+
+
+        [Test]
+        public void TestPluralTranslations()
+        {
+            var catalog = GettextCatalog.ParseFromPoString(File.ReadAllText("po\\test-plural-slo.po"));
+            var gt = new Gettext(catalog);
+
+            {
+                var msgid = "{0} file";
+                var msgidPlural = "{0} files";
+
+                for (var i = 0; i < 6; i++)
+                {
+                    var s = string.Format(gt.NGettext(msgid, msgidPlural, i), i);
+                    Console.WriteLine(s);
+                }
+            }
+        }
+
     }
 }

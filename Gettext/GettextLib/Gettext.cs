@@ -26,6 +26,17 @@ namespace GettextLib
             return t;
         }
 
+        private Translation LookupPlural(string context, string msgid, string msgidplural)
+        {
+            context = context ?? string.Empty;
+            var translation = catalog.Translations.SingleOrDefault(x => string.Equals(msgid, x.MessageId.String) && string.Equals(context, x.MessageContext.String) &&
+                string.Equals(msgidplural, x.MessageIdPlural.String));
+            if (translation == null) return null;
+
+            if (translation.MessageTranslations.Count != catalog.NPlurals) return null;
+            return translation;
+        }
+
         public string _(string msgid)
         {
             var l = Lookup(null, msgid);
@@ -35,7 +46,16 @@ namespace GettextLib
 
         public string NGettext(string msgid, string msgidPlural, long n)
         {
-            // dummy 
+            var pl = LookupPlural(null, msgid, msgidPlural);
+            if (pl == null) goto fallback;
+
+            var idx = catalog.GetPluralIndex(n);
+            var t = pl.MessageTranslations.SingleOrDefault(x => x.Index == idx);
+            if (t == null) goto fallback;
+
+            return t.Message.String;
+
+            fallback:
             return n == 1 ? msgid : msgidPlural;
         }
 
