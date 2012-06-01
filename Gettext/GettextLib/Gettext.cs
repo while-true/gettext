@@ -47,6 +47,11 @@ namespace GettextLib
         public string NGettext(string msgid, string msgidPlural, long n)
         {
             var pl = LookupPlural(null, msgid, msgidPlural);
+            return PluralTranslate(msgid, msgidPlural, n, pl);
+        }
+
+        private string PluralTranslate(string msgid, string msgidPlural, long n, Translation pl)
+        {
             if (pl == null) goto fallback;
 
             var idx = catalog.GetPluralIndex(n);
@@ -68,7 +73,8 @@ namespace GettextLib
 
         public string PNGettext(string msgctxt, string msgid, string msgidPlural, long n)
         {
-            throw new NotImplementedException();
+            var pl = LookupPlural(msgctxt, msgid, msgidPlural);
+            return PluralTranslate(msgid, msgidPlural, n, pl);
         }
     }
 }

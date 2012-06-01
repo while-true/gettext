@@ -214,7 +214,13 @@ namespace GettextTests
                 var msgid = "{0} file";
                 var msgidPlural = "{0} files";
 
-                for (var i = 0; i < 6; i++)
+                var t = new[]
+                            {
+                                0, 1, 2, 3, 4, 5,
+                                100, 101, 102, 103, 104, 105
+                            };
+
+                foreach (var i in t)
                 {
                     var s = string.Format(gt.NGettext(msgid, msgidPlural, i), i);
                     Console.WriteLine(s);
