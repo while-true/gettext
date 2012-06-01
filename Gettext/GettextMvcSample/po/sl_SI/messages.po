@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: \n"
-"PO-Revision-Date: 2012-06-01 15:32+0100\n"
+"PO-Revision-Date: 2012-06-01 16:39+0100\n"
 "Last-Translator: Rudi Benkovič <rudi@whiletrue.com>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -44,10 +44,10 @@ msgstr "Živjo {username}!"
 #: ..\GettextMvcSample\\Views\Home\Index.cshtml:16
 msgid "{fileCount} file"
 msgid_plural "{fileCount} files"
-msgstr[0] "{fileCount} datotek"
-msgstr[1] "{fileCount} datoteka"
-msgstr[2] "{fileCount} datoteki"
-msgstr[3] "{fileCount} datoteke"
+msgstr[0] "{fileCount} datoteka"
+msgstr[1] "{fileCount} datoteki"
+msgstr[2] "{fileCount} datoteke"
+msgstr[3] "{fileCount} datotek"
 
 #: ..\GettextMvcSample\\Models\Home\IndexModel.cs:38
 msgid "Hello world from custom validator"
@@ -75,4 +75,13 @@ msgstr "Pozdravljen svet iz Razor pogleda!"
 #: ..\GettextMvcSample\\Scripts\index.js:4
 msgid "Hello world from Javascript!"
 msgstr "Pozdravljen svet iz Javascripta!"
+
+#: ..\GettextMvcSample\\Scripts\index.js:8
+#, c-format
+msgid "%d file"
+msgid_plural "%d files"
+msgstr[0] "%d datoteka"
+msgstr[1] "%d datoteki"
+msgstr[2] "%d datoteke"
+msgstr[3] "%d datotek"
 

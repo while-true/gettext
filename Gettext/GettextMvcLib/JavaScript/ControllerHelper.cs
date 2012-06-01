@@ -35,10 +35,10 @@ namespace GettextMvcLib.JavaScript
                                                                            return c.Contains(".js");
                                                                        }).ToList();
 
+                var j = new JsonTranslations();
+
                 if (jsTranslations.Count > 0)
                 {
-                    var j = new JsonTranslations();
-
                     foreach (var jsTranslation in jsTranslations)
                     {
                         var t = new JsonTranslations.Translation();
@@ -48,17 +48,26 @@ namespace GettextMvcLib.JavaScript
 
                         j.Translations.Add(jsTranslation.MessageId.String, t);
                     }
+                }
 
-                    var ss = new JavaScriptSerializer();
-                    jsonTr = ss.Serialize(j);
+                var ss = new JavaScriptSerializer();
+                jsonTr = ss.Serialize(j);
+
+                if (!string.IsNullOrWhiteSpace(jsonTr))
+                {
+                    string jsRepl = "__gettext_translations = " + jsonTr + ";\n";
+
+                    if (gt.Catalog.PluralExpression != null)
+                    {
+                        jsRepl += string.Format("__gettext_plural_func = function(n) {{ return {0} ; }};\n", gt.Catalog.PluralExpression.ToPrint());
+                    }
+
+
+
+                    js = js.Replace("/* == TRANSLATION == */", jsRepl);
                 }
             }
             
-            if (!string.IsNullOrWhiteSpace(jsonTr))
-            {
-                js = js.Replace("/* == TRANSLATION == */", "__gettext_translations = " + jsonTr + ";");
-            }
-
             return new ContentResult
                        {
                            Content = js,

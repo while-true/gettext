@@ -17,7 +17,7 @@ namespace GettextLib.Catalog
         public Dictionary<string, string> Headers { get; private set; }
 
         public const string PluralFormsHeaderKey = "Plural-Forms";
-
+        
         internal GettextCatalog()
         {
             Translations = new List<Translation>();
@@ -129,6 +129,8 @@ namespace GettextLib.Catalog
             }
 
             {
+                PluralExpression = assignmentN;
+
                 GetPluralIndex = n =>
                                      {
                                          var state = new ExpressionState();
@@ -139,6 +141,8 @@ namespace GettextLib.Catalog
                                      };
             }
         }
+
+        internal Assignment PluralExpression { get; private set; }
     }
     
     public class Translation

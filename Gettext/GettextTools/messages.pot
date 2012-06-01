@@ -51,3 +51,10 @@ msgstr ""
 #: ..\GettextMvcSample\\Scripts\index.js:4
 msgid "Hello world from Javascript!"
 msgstr ""
+
+#: ..\GettextMvcSample\\Scripts\index.js:8
+#, c-format
+msgid "%d file"
+msgid_plural "%d files"
+msgstr[0] ""
+msgstr[1] ""
