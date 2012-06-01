@@ -1,56 +1,24 @@
-# SOME DESCRIPTIVE TITLE.
-# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
-# This file is distributed under the same license as the PACKAGE package.
-# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
-#
-#, fuzzy
-msgid ""
+#: ..\GettextMvcSample\\Controllers\HomeController.cs:17
+msgctxt "context 1"
+msgid "test1"
 msgstr ""
-"#-#-#-#-#  messages-code.pot (PACKAGE VERSION)  #-#-#-#-#\n"
-"Project-Id-Version: PACKAGE VERSION\n"
-"Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2012-05-30 14:56+0200\n"
-"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
-"Language-Team: LANGUAGE <LL@li.org>\n"
-"Language: \n"
-"MIME-Version: 1.0\n"
-"Content-Type: text/plain; charset=CHARSET\n"
-"Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=INTEGER; plural=EXPRESSION;\n"
-"#-#-#-#-#  messages-data-annotations.pot (PACKAGE VERSION)  #-#-#-#-#\n"
-"Project-Id-Version: PACKAGE VERSION\n"
-"Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2012-05-30 12:08+0200\n"
-"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
-"Language-Team: LANGUAGE <LL@li.org>\n"
-"Language: \n"
-"MIME-Version: 1.0\n"
-"Content-Type: text/plain; charset=CHARSET\n"
-"Content-Transfer-Encoding: 8bit\n"
-"#-#-#-#-#  messages-razor-views.pot (PACKAGE VERSION)  #-#-#-#-#\n"
-"Project-Id-Version: PACKAGE VERSION\n"
-"Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2012-05-30 14:56+0200\n"
-"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
-"Language-Team: LANGUAGE <LL@li.org>\n"
-"Language: \n"
-"MIME-Version: 1.0\n"
-"Content-Type: text/plain; charset=CHARSET\n"
-"Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=INTEGER; plural=EXPRESSION;\n"
 
 #: ..\GettextMvcSample\\Controllers\HomeController.cs:18
+msgctxt "context 2"
+msgid "test"
+msgid_plural "tests"
+msgstr[0] ""
+msgstr[1] ""
+
+#: ..\GettextMvcSample\\Controllers\HomeController.cs:23
 msgid "Hello world from Controller code!"
 msgstr ""
 
-#: ..\GettextMvcSample\\Controllers\HomeController.cs:21
+#: ..\GettextMvcSample\\Controllers\HomeController.cs:26
 msgid "Hello {username}!"
 msgstr ""
 
-#: ..\GettextMvcSample\\Controllers\HomeController.cs:30
+#: ..\GettextMvcSample\\Controllers\HomeController.cs:35
 #: ..\GettextMvcSample\\Views\Home\Index.cshtml:16
 msgid "{fileCount} file"
 msgid_plural "{fileCount} files"
@@ -67,10 +35,10 @@ msgstr ""
 msgid "Email Field"
 msgstr ""
 
-msgid "Hello world from MaxLength attribute"
+msgid "Too Long Field"
 msgstr ""
 
-msgid "Too Long Field"
+msgid "Hello world from MaxLength attribute"
 msgstr ""
 
 msgid "Password"
@@ -78,4 +46,8 @@ msgstr ""
 
 #: ..\GettextMvcSample\\Views\Home\Index.cshtml:14
 msgid "Hello world from Razor View!"
+msgstr ""
+
+#: ..\GettextMvcSample\\Scripts\index.js:4
+msgid "Hello world from Javascript!"
 msgstr ""

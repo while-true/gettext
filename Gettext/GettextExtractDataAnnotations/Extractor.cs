@@ -36,7 +36,7 @@ namespace GettextExtractDataAnnotations
         public string ToPoString()
         {
             var sb = new StringBuilder();
-
+            /*
             sb.Append(@"# SOME DESCRIPTIVE TITLE.
 # Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
 # This file is distributed under the same license as the PACKAGE package.
@@ -56,7 +56,7 @@ msgstr """"
 ""Content-Type: text/plain; charset=CHARSET\n""
 ""Content-Transfer-Encoding: 8bit\n""");
             sb.Append("\n\n");
-
+            */
             foreach (var translationString in translations)
             {
                 sb.AppendFormat("msgid \"{0}\"\n", Escape(translationString.Str));

@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2012-05-30 14:56+0200\n"
-"PO-Revision-Date: 2012-05-30 14:59+0100\n"
+"POT-Creation-Date: \n"
+"PO-Revision-Date: 2012-06-01 15:32+0100\n"
 "Last-Translator: Rudi Benkovič <rudi@whiletrue.com>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -18,15 +18,29 @@ msgstr ""
 "Plural-Forms: nplurals=4; plural=n%100==1 ? 0 : n%100==2 ? 1 : n%100==3 || n%100==4 ? 2 : 3;\n"
 "X-Poedit-SourceCharset: utf-8\n"
 
+#: ..\GettextMvcSample\\Controllers\HomeController.cs:17
+msgctxt "context 1"
+msgid "test1"
+msgstr "test1"
+
 #: ..\GettextMvcSample\\Controllers\HomeController.cs:18
+msgctxt "context 2"
+msgid "test"
+msgid_plural "tests"
+msgstr[0] ""
+msgstr[1] ""
+msgstr[2] ""
+msgstr[3] ""
+
+#: ..\GettextMvcSample\\Controllers\HomeController.cs:23
 msgid "Hello world from Controller code!"
 msgstr "Pozdravljen svet iz Kontrolerja!"
 
-#: ..\GettextMvcSample\\Controllers\HomeController.cs:21
+#: ..\GettextMvcSample\\Controllers\HomeController.cs:26
 msgid "Hello {username}!"
 msgstr "Živjo {username}!"
 
-#: ..\GettextMvcSample\\Controllers\HomeController.cs:30
+#: ..\GettextMvcSample\\Controllers\HomeController.cs:35
 #: ..\GettextMvcSample\\Views\Home\Index.cshtml:16
 msgid "{fileCount} file"
 msgid_plural "{fileCount} files"
@@ -45,11 +59,11 @@ msgstr "Pozdravljen svet iz Required atributa"
 msgid "Email Field"
 msgstr "Email Polje"
 
-msgid "Hello world from MaxLength attribute"
-msgstr "Pozdravljen svet iz MaxLength atributa"
-
 msgid "Too Long Field"
 msgstr "Predolgo polje"
+
+msgid "Hello world from MaxLength attribute"
+msgstr "Pozdravljen svet iz MaxLength atributa"
 
 msgid "Password"
 msgstr "Geslo"
@@ -57,4 +71,8 @@ msgstr "Geslo"
 #: ..\GettextMvcSample\\Views\Home\Index.cshtml:14
 msgid "Hello world from Razor View!"
 msgstr "Pozdravljen svet iz Razor pogleda!"
+
+#: ..\GettextMvcSample\\Scripts\index.js:4
+msgid "Hello world from Javascript!"
+msgstr "Pozdravljen svet iz Javascripta!"
 

@@ -5,10 +5,11 @@ IF [%1]==[] (
 )
 
 call extract_from_code.bat %1
-call extract_from_razor_views.bat %1
+call extract_from_views.bat %1
+call extract_from_js.bat %1
 GettextExtractorApp.exe %1
 
 
-msgcat messages-code.pot messages-data-annotations.pot messages-razor-views.pot > messages.pot
+msgcat messages-code.pot messages-data-annotations.pot messages-views.pot messages-js.pot > messages.pot
 
 :QUITMVC

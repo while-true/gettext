@@ -5,6 +5,7 @@ using System.Web;
 using System.Web.Mvc;
 using GettextMvcLib;
 using GettextMvcLib.HttpContextHelper;
+using GettextMvcLib.JavaScript;
 using GettextMvcSample.Models.Home;
 
 namespace GettextMvcSample.Controllers
@@ -39,6 +40,11 @@ namespace GettextMvcSample.Controllers
             
             
             return View(model);
+        }
+
+        public ActionResult GettextJavascript()
+        {
+            return ControllerHelper.HandleRequest();
         }
     }
 }

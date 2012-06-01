@@ -8,18 +8,18 @@ namespace GettextLib
 {
     public class Gettext : IGettext
     {
-        private readonly GettextCatalog catalog;
+        public GettextCatalog Catalog { get; private set; }
 
         public Gettext(GettextCatalog catalog)
         {
             if (catalog == null) throw new ArgumentNullException("catalog");
-            this.catalog = catalog;
+            Catalog = catalog;
         }
 
         private Translation.TranslationString Lookup(string context, string msgid)
         {
             context = context ?? string.Empty;
-            var translation = catalog.Translations.SingleOrDefault(x => string.Equals(msgid, x.MessageId.String) && string.Equals(context, x.MessageContext.String));
+            var translation = Catalog.Translations.SingleOrDefault(x => string.Equals(msgid, x.MessageId.String) && string.Equals(context, x.MessageContext.String));
             if (translation == null) return null;
 
             var t = translation.MessageTranslations.FirstOrDefault(x => x.Index == 0);
@@ -29,11 +29,11 @@ namespace GettextLib
         private Translation LookupPlural(string context, string msgid, string msgidplural)
         {
             context = context ?? string.Empty;
-            var translation = catalog.Translations.SingleOrDefault(x => string.Equals(msgid, x.MessageId.String) && string.Equals(context, x.MessageContext.String) &&
+            var translation = Catalog.Translations.SingleOrDefault(x => string.Equals(msgid, x.MessageId.String) && string.Equals(context, x.MessageContext.String) &&
                 string.Equals(msgidplural, x.MessageIdPlural.String));
             if (translation == null) return null;
 
-            if (translation.MessageTranslations.Count != catalog.NPlurals) return null;
+            if (translation.MessageTranslations.Count != Catalog.NPlurals) return null;
             return translation;
         }
 
@@ -54,7 +54,7 @@ namespace GettextLib
         {
             if (pl == null) goto fallback;
 
-            var idx = catalog.GetPluralIndex(n);
+            var idx = Catalog.GetPluralIndex(n);
             var t = pl.MessageTranslations.SingleOrDefault(x => x.Index == idx);
             if (t == null) goto fallback;
 
