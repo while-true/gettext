@@ -6,12 +6,13 @@ using System.Reflection;
 using System.Text;
 using System.Web.Mvc;
 using System.Web.Script.Serialization;
+using GettextLib;
 
 namespace GettextMvcLib.JavaScript
 {
     public static class ControllerHelper
     {
-        public static ActionResult HandleRequest()
+        public static ActionResult HandleRequest(Gettext gettext = null)
         {
             string js;
 
@@ -21,14 +22,18 @@ namespace GettextMvcLib.JavaScript
                 js = sr.ReadToEnd();
             }
 
-            var g = GettextMvcUtils.GetGettext();
-            var gt = g as GettextLib.Gettext;
+            if (gettext == null)
+            {
+                var g = GettextMvcUtils.GetGettext();
+                gettext = g as Gettext;
+            }
+            
 
             var jsonTr = "";
 
-            if (gt != null)
+            if (gettext != null)
             {
-                var jsTranslations = gt.Catalog.Translations.Where(x =>
+                var jsTranslations = gettext.Catalog.Translations.Where(x =>
                                                                        {
                                                                            var c = x.Comment.String;
                                                                            if (string.IsNullOrWhiteSpace(c)) return false;
@@ -57,9 +62,9 @@ namespace GettextMvcLib.JavaScript
                 {
                     string jsRepl = "__gettext_translations = " + jsonTr + ";\n";
 
-                    if (gt.Catalog.PluralExpression != null)
+                    if (gettext.Catalog.PluralExpression != null)
                     {
-                        jsRepl += string.Format("__gettext_plural_func = function(n) {{ return {0} ; }};\n", gt.Catalog.PluralExpression.ToPrint());
+                        jsRepl += string.Format("__gettext_plural_func = function(n) {{ return {0} ; }};\n", gettext.Catalog.PluralExpression.ToPrint());
                     }
 
 

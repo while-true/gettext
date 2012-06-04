@@ -135,6 +135,10 @@
     <Content Include="Views\Shared\_Layout.cshtml" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\GettextLib\GettextLib.csproj">
+      <Project>{E69B82A7-0643-46B6-91BE-BA44B367E159}</Project>
+      <Name>GettextLib</Name>
+    </ProjectReference>
     <ProjectReference Include="..\GettextMvcLib\GettextMvcLib.csproj">
       <Project>{9EFA30DA-0DDD-4B21-AD19-6B8FED88AB66}</Project>
       <Name>GettextMvcLib</Name>
