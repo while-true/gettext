@@ -16,24 +16,26 @@ namespace GettextTests
         [Test]
         public void Test1()
         {
-            //var f = File.ReadAllText("test-po\\test_basic_2.po");
-            var f = File.ReadAllText("test-po\\test_utf8.po");
-            //Console.WriteLine(f);
+            var d = new DirectoryInfo("test-po");
+            var files = d.GetFiles("*.po");
 
-            //ScannerDump(f);
+            foreach (var fileInfo in files)
+            {
+                Console.WriteLine(fileInfo.FullName);
+                var f = File.ReadAllText(fileInfo.FullName);
 
-            var scanner = new GettextLib.Parser.Scanner();
-            scanner.SetSource(f, 0);
+                var scanner = new GettextLib.Parser.Scanner();
+                scanner.SetSource(f, 0);
 
-            var parser = new GettextLib.Parser.Parser(scanner);
-            parser.Parse();
+                var parser = new GettextLib.Parser.Parser(scanner);
+                parser.Parse();
 
-            var catalog = parser.Catalog;
+                var catalog = parser.Catalog;
 
-            if (catalog == null) throw new Exception("no catalog!");
+                if (catalog == null) throw new Exception("no catalog!");
 
-            var a = 1;
-
+                Console.WriteLine("translations: " + catalog.Translations.Count);
+            }
         }
 
         private void ScannerDump(string str)

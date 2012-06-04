@@ -1,0 +1,11 @@
+# hello
+msgid "foo"
+msgstr "foo"
+
+#~ msgid "%d file"
+
+#~ msgid_plural "%d files"
+#~ msgstr[0] "%d datoteka"
+#~ msgstr[1] "%d datoteki"
+#~ msgstr[2] "%d datoteke"
+#~ msgstr[3] "%d datotek" 
