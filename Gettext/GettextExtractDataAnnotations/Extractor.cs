@@ -19,25 +19,23 @@ namespace GettextExtractDataAnnotations
             var types = assembly.GetTypes();
             foreach (var type in types)
             {
-                Console.WriteLine("Type {0}", type.Name);
-
                 Parse(type);
 
                 var props = type.GetProperties();
                 foreach (var propertyInfo in props)
                 {
-                    Parse(propertyInfo);
+                    Parse(propertyInfo, type.FullName);
                 }
-
-                
             }
         }
 
         public string ToPoString()
         {
             var sb = new StringBuilder();
-            /*
-            sb.Append(@"# SOME DESCRIPTIVE TITLE.
+            if (false)
+            {
+                sb.Append(
+                    @"# SOME DESCRIPTIVE TITLE.
 # Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
 # This file is distributed under the same license as the PACKAGE package.
 # FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
@@ -55,14 +53,35 @@ msgstr """"
 ""MIME-Version: 1.0\n""
 ""Content-Type: text/plain; charset=CHARSET\n""
 ""Content-Transfer-Encoding: 8bit\n""");
-            sb.Append("\n\n");
-            */
+                sb.Append("\n\n");
+            }
+
+            var gr = translations.GroupBy(x => x.Str);
+
+            foreach (var group in gr)
+            {
+                var f = group.First();
+
+                var origins = group.Select(x => x.Origin).Where(x => !string.IsNullOrWhiteSpace(x)).Distinct().ToList();
+
+                foreach (var or in origins)
+                {
+                    sb.AppendFormat("#: {0}\n", or);
+                }
+
+                sb.AppendFormat("msgid \"{0}\"\n", Escape(f.Str));
+                sb.AppendFormat("msgstr \"\"\n");
+                sb.Append("\n");
+            }
+
+            /*
             foreach (var translationString in translations)
             {
                 sb.AppendFormat("msgid \"{0}\"\n", Escape(translationString.Str));
                 sb.AppendFormat("msgstr \"\"\n");
                 sb.Append("\n");
             }
+            */
 
             return sb.ToString();
         }
@@ -78,40 +97,37 @@ msgstr """"
         private class TranslationString
         {
             public string Str { get; set; }
+            public string Origin { get; set; }
 
-            public TranslationString(string str)
+            public TranslationString(string str, string origin)
             {
                 Str = str;
+                Origin = origin;
             }
         }
 
-        private void AddTranslation(string str)
-        {
-            if (string.IsNullOrWhiteSpace(str)) return;
-
-            var p = translations.SingleOrDefault(x => x.Str == str);
-            if (p != null) return;
-
-            translations.Add(new TranslationString(str));
-        }
-
-        private void Parse(MemberInfo info)
+        private void Parse(MemberInfo info, string originInfo = "")
         {
             var d = info.GetCustomAttributes(true);
             if (d.Length == 0) return;
+
+            originInfo = originInfo ?? "";
+            string o;
+            if (!string.IsNullOrWhiteSpace(originInfo)) o = originInfo + ".";
+            else o = "";
 
             foreach (var attribute in d)
             {
                 var displayAttribute = attribute as DisplayAttribute;
                 if (displayAttribute != null)
                 {
-                    AddTranslation(displayAttribute.Name);
+                    translations.Add(new TranslationString(displayAttribute.Name, o + info.Name));
                 }
 
                 var va = attribute as ValidationAttribute;
                 if (va != null)
                 {
-                    AddTranslation(va.ErrorMessage);
+                    translations.Add(new TranslationString(va.ErrorMessage, o + info.Name));
                 }
             }
         }
