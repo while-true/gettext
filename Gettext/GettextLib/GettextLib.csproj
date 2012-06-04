@@ -46,6 +46,7 @@
     <Compile Include="ExpressionEvaluator\Expr.cs" />
     <Compile Include="Gettext.cs" />
     <Compile Include="GettextDummy.cs" />
+    <Compile Include="GettextException.cs" />
     <Compile Include="GettextPseudo.cs" />
     <Compile Include="IGettext.cs" />
     <Compile Include="Parser\PoLexer.cs" />

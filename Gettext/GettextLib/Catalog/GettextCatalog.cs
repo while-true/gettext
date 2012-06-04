@@ -67,7 +67,7 @@ namespace GettextLib.Catalog
 
             ret:
 
-            if (catalog == null) throw new Exception("Coudln't parse the catalog");
+            if (catalog == null) throw new GettextException("Couldn't parse the catalog");
             return catalog;
         }
 
@@ -113,7 +113,7 @@ namespace GettextLib.Catalog
                 script = parser.Script;
             } catch (Exception e)
             {
-                throw new Exception("Error parsing the plural forms header", e);
+                throw new GettextException("Error parsing the plural forms header", e);
             }
 
             if (script == null) return;
