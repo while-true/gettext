@@ -57,16 +57,21 @@
 Catalog
 	: MessageBlocks	{
 				$$ = new GettextLib.Catalog.GettextCatalog();
-				$$.AddTranslations($1);
+				
+				if ($1 != null) {
+					$$.AddTranslations($1);
+				}
 				
 				Catalog = $$;
 			}
-	EOF
 	;
 	
 MessageBlocks
-	: MessageBlock { $$ = new List<GettextLib.Catalog.Translation>(); $$.Add($1); }
-	| MessageBlocks MessageBlock { $1.Add($2); $$ = $1; }
+	: MessageBlock { 
+		$$ = new List<GettextLib.Catalog.Translation>(); 
+		if ($1 != null) $$.Add($1);
+	}
+	| MessageBlocks MessageBlock { if ($2 != null) { $1.Add($2); } $$ = $1; }
 	;
 
 MessageBlock
@@ -81,6 +86,8 @@ MessageBlock
 			
 			$$.MessageTranslations = $4;
 		}
+	| Comments EOL
+	| Comments EOF
 	;
 
 MessageComments
