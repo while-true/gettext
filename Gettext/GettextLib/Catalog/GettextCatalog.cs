@@ -11,28 +11,74 @@ namespace GettextLib.Catalog
     {
         public int NPlurals { get; set; }
         public Func<long, int> GetPluralIndex { get; set; }
-
-        public List<Translation> Translations { get; set; }
-
+        internal List<Translation> Translations { get; set; }
         public Dictionary<string, string> Headers { get; private set; }
 
+        internal Dictionary<string, Translation> TranslationLookup { get; private set; }
+
         public const string PluralFormsHeaderKey = "Plural-Forms";
-        
+
+        internal bool TranslateFuzzyTranslations { get; private set; }
+
         internal GettextCatalog()
         {
             Translations = new List<Translation>();
             NPlurals = 2;
             GetPluralIndex = n => n == 1 ? 0 : 1;
             Headers = new Dictionary<string, string>();
+            TranslateFuzzyTranslations = true;
         }
 
-        public void AddTranslation(Translation translation)
+        public const string ContextSeparator = "\u0004";
+
+        private static string LookupKey(string messageContext, string messageId, string messageIdPlural)
+        {
+            var parts = new[] { messageContext, messageId, messageIdPlural }.Where(x => !string.IsNullOrWhiteSpace(x)).ToArray();
+            if (parts.Length == 0) return null;
+            return string.Join(ContextSeparator, parts);
+        }
+
+        internal Translation Lookup(string messageContext, string messageId, string messageIdPlural)
+        {
+            var key = LookupKey(messageContext, messageId, messageIdPlural);
+
+
+            Translation trans;
+            if (TranslationLookup.TryGetValue(key, out trans))
+            {
+                return trans;
+            }
+
+            return null;
+        }
+
+        /// <summary>
+        /// Builds lookup structures
+        /// </summary>
+        internal void Finalize()
+        {
+            TranslationLookup = new Dictionary<string, Translation>();
+
+            foreach (var translation in Translations)
+            {
+                if (translation.Fuzzy && !TranslateFuzzyTranslations) continue;
+
+                var key = LookupKey(translation.MessageContext.String, translation.MessageId.String, translation.MessageIdPlural.String);
+
+                if (!string.IsNullOrWhiteSpace(key) && !TranslationLookup.ContainsKey(key))
+                {
+                    TranslationLookup.Add(key, translation);
+                }
+            }
+        }
+
+        internal void AddTranslation(Translation translation)
         {
             if (translation == null) throw new ArgumentNullException("translation");
             Translations.Add(translation);
         }
 
-        public void AddTranslations(IEnumerable<Translation> translations)
+        internal void AddTranslations(IEnumerable<Translation> translations)
         {
             if (translations == null) return;
 
@@ -59,15 +105,17 @@ namespace GettextLib.Catalog
                 // another parsing step
                 catalog.ParseHeaders();
 
+                // build lookup structures
+                catalog.Finalize();
 
             } catch (Exception e)
             {
-                throw new Exception("Parsing exception!", e);
+                throw new GettextException("Parsing exception!", e);
             }
 
             ret:
 
-            if (catalog == null) throw new GettextException("Couldn't parse the catalog");
+            if (catalog == null) throw new GettextException("Couldn't parse the catalog. Check the syntax.");
             return catalog;
         }
 
@@ -152,6 +200,7 @@ namespace GettextLib.Catalog
         public MultiLineString MessageContext { get; set; }
         public List<TranslationString> MessageTranslations { get; set; }
         public MultiLineString Comment { get; set; }
+        public bool Fuzzy { get; set; }
 
         public Translation()
         {

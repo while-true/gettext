@@ -19,7 +19,7 @@ namespace GettextLib
         private Translation.TranslationString Lookup(string context, string msgid)
         {
             context = context ?? string.Empty;
-            var translation = Catalog.Translations.SingleOrDefault(x => string.Equals(msgid, x.MessageId.String) && string.Equals(context, x.MessageContext.String));
+            var translation = Catalog.Lookup(context, msgid, null);
             if (translation == null) return null;
 
             var t = translation.MessageTranslations.FirstOrDefault(x => x.Index == 0);
@@ -29,8 +29,7 @@ namespace GettextLib
         private Translation LookupPlural(string context, string msgid, string msgidplural)
         {
             context = context ?? string.Empty;
-            var translation = Catalog.Translations.SingleOrDefault(x => string.Equals(msgid, x.MessageId.String) && string.Equals(context, x.MessageContext.String) &&
-                string.Equals(msgidplural, x.MessageIdPlural.String));
+            var translation = Catalog.Lookup(context, msgid, msgidplural);
             if (translation == null) return null;
 
             if (translation.MessageTranslations.Count != Catalog.NPlurals) return null;
