@@ -4,12 +4,15 @@ IF [%1]==[] (
 	goto QUITMVC
 )
 
-call extract_from_code.bat %1
-call extract_from_views.bat %1
-call extract_from_js.bat %1
-GettextExtractorApp.exe %1
+set __gettext_current_dir=%CD%\
+set __gettext_tools_dir=%~dp0
+
+call %__gettext_tools_dir%extract_from_code.bat %1
+call %__gettext_tools_dir%extract_from_views.bat %1
+call %__gettext_tools_dir%extract_from_js.bat %1
+%__gettext_tools_dir%GettextExtractorApp.exe %1
 
 
-msgcat messages-code.pot messages-data-annotations.pot messages-views.pot messages-js.pot > messages.pot
+%__gettext_tools_dir%msgcat messages-code.pot messages-data-annotations.pot messages-views.pot messages-js.pot > messages.pot
 
 :QUITMVC

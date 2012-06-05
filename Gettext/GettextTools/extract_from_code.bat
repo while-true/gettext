@@ -4,9 +4,12 @@ IF [%1]==[] (
 	goto QUITCODE
 )
 
-call extract_vars.bat
+set __gettext_current_dir=%CD%\
+set __gettext_tools_dir=%~dp0
 
-find %1 -iname "*.cs" | sed "s/\//\\/g" > files.txt
-xgettext -f files.txt %xgettext_options% -o messages-code.pot
+call %__gettext_tools_dir%extract_vars.bat
+
+%__gettext_tools_dir%find %1 -iname "*.cs" | %__gettext_tools_dir%sed "s/\//\\/g" > %__gettext_current_dir%files.txt
+%__gettext_tools_dir%xgettext -f %__gettext_current_dir%files.txt %xgettext_options% -o %__gettext_current_dir%messages-code.pot
 
 :QUITCODE
