@@ -10,8 +10,7 @@ set __gettext_tools_dir=%~dp0
 call %__gettext_tools_dir%extract_from_code.bat %1
 call %__gettext_tools_dir%extract_from_views.bat %1
 call %__gettext_tools_dir%extract_from_js.bat %1
-%__gettext_tools_dir%GettextExtractorApp.exe %1
-
+call %__gettext_tools_dir%extract_data_annotations.bat %1\bin\
 
 %__gettext_tools_dir%msgcat messages-code.pot messages-data-annotations.pot messages-views.pot messages-js.pot > messages.pot
 

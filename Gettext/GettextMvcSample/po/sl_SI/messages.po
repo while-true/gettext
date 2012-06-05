@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: \n"
-"PO-Revision-Date: 2012-06-01 16:39+0100\n"
+"PO-Revision-Date: 2012-06-04 14:29+0100\n"
 "Last-Translator: Rudi Benkovič <rudi@whiletrue.com>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -27,10 +27,10 @@ msgstr "test1"
 msgctxt "context 2"
 msgid "test"
 msgid_plural "tests"
-msgstr[0] ""
-msgstr[1] ""
-msgstr[2] ""
-msgstr[3] ""
+msgstr[0] "test"
+msgstr[1] "testa"
+msgstr[2] "testi"
+msgstr[3] "testov"
 
 #: ..\GettextMvcSample\\Controllers\HomeController.cs:23
 msgid "Hello world from Controller code!"
@@ -42,6 +42,7 @@ msgstr "Živjo {username}!"
 
 #: ..\GettextMvcSample\\Controllers\HomeController.cs:35
 #: ..\GettextMvcSample\\Views\Home\Index.cshtml:16
+#: ..\GettextMvcSample\\Scripts\index.js:7
 msgid "{fileCount} file"
 msgid_plural "{fileCount} files"
 msgstr[0] "{fileCount} datoteka"
@@ -53,18 +54,23 @@ msgstr[3] "{fileCount} datotek"
 msgid "Hello world from custom validator"
 msgstr "Pozdravljen svet iz validatorja!"
 
+#: GettextMvcSample.Models.Home.IndexModel.Email
 msgid "Hello world from Required attribute"
 msgstr "Pozdravljen svet iz Required atributa"
 
+#: GettextMvcSample.Models.Home.IndexModel.Email
 msgid "Email Field"
 msgstr "Email Polje"
 
+#: GettextMvcSample.Models.Home.IndexModel.TooLong
 msgid "Too Long Field"
 msgstr "Predolgo polje"
 
+#: GettextMvcSample.Models.Home.IndexModel.TooLong
 msgid "Hello world from MaxLength attribute"
 msgstr "Pozdravljen svet iz MaxLength atributa"
 
+#: GettextMvcSample.Models.Home.IndexModel+IndexAnotherModel.Password
 msgid "Password"
 msgstr "Geslo"
 
@@ -76,12 +82,10 @@ msgstr "Pozdravljen svet iz Razor pogleda!"
 msgid "Hello world from Javascript!"
 msgstr "Pozdravljen svet iz Javascripta!"
 
-#: ..\GettextMvcSample\\Scripts\index.js:8
-#, c-format
-msgid "%d file"
-msgid_plural "%d files"
-msgstr[0] "%d datoteka"
-msgstr[1] "%d datoteki"
-msgstr[2] "%d datoteke"
-msgstr[3] "%d datotek"
+#~ msgid "%d file"
 
+#~ msgid_plural "%d files"
+#~ msgstr[0] "%d datoteka"
+#~ msgstr[1] "%d datoteki"
+#~ msgstr[2] "%d datoteke"
+#~ msgstr[3] "%d datotek"

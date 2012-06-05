@@ -9,8 +9,6 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GettextTests", "GettextTest
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GettextLib", "GettextLib\GettextLib.csproj", "{E69B82A7-0643-46B6-91BE-BA44B367E159}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GettextExtractDataAnnotations", "GettextExtractDataAnnotations\GettextExtractDataAnnotations.csproj", "{FED93054-D9F1-4BD5-A020-B6750CC3C997}"
-EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GettextExtractorApp", "GettextExtractorApp\GettextExtractorApp.csproj", "{6EF76C42-CF8D-4A86-BEA0-4C924AC6F594}"
 EndProject
 Global
@@ -63,16 +61,6 @@ Global
 		{E69B82A7-0643-46B6-91BE-BA44B367E159}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
 		{E69B82A7-0643-46B6-91BE-BA44B367E159}.Release|Mixed Platforms.Build.0 = Release|Any CPU
 		{E69B82A7-0643-46B6-91BE-BA44B367E159}.Release|x86.ActiveCfg = Release|Any CPU
-		{FED93054-D9F1-4BD5-A020-B6750CC3C997}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{FED93054-D9F1-4BD5-A020-B6750CC3C997}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{FED93054-D9F1-4BD5-A020-B6750CC3C997}.Debug|Mixed Platforms.ActiveCfg = Debug|Any CPU
-		{FED93054-D9F1-4BD5-A020-B6750CC3C997}.Debug|Mixed Platforms.Build.0 = Debug|Any CPU
-		{FED93054-D9F1-4BD5-A020-B6750CC3C997}.Debug|x86.ActiveCfg = Debug|Any CPU
-		{FED93054-D9F1-4BD5-A020-B6750CC3C997}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{FED93054-D9F1-4BD5-A020-B6750CC3C997}.Release|Any CPU.Build.0 = Release|Any CPU
-		{FED93054-D9F1-4BD5-A020-B6750CC3C997}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
-		{FED93054-D9F1-4BD5-A020-B6750CC3C997}.Release|Mixed Platforms.Build.0 = Release|Any CPU
-		{FED93054-D9F1-4BD5-A020-B6750CC3C997}.Release|x86.ActiveCfg = Release|Any CPU
 		{6EF76C42-CF8D-4A86-BEA0-4C924AC6F594}.Debug|Any CPU.ActiveCfg = Debug|x86
 		{6EF76C42-CF8D-4A86-BEA0-4C924AC6F594}.Debug|Mixed Platforms.ActiveCfg = Debug|x86
 		{6EF76C42-CF8D-4A86-BEA0-4C924AC6F594}.Debug|Mixed Platforms.Build.0 = Debug|x86
