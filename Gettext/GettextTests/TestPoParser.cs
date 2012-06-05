@@ -24,17 +24,18 @@ namespace GettextTests
                 Console.WriteLine(fileInfo.FullName);
                 var f = File.ReadAllText(fileInfo.FullName);
 
-                var scanner = new GettextLib.Parser.Scanner();
-                scanner.SetSource(f, 0);
-
-                var parser = new GettextLib.Parser.Parser(scanner);
-                parser.Parse();
-
-                var catalog = parser.Catalog;
+                var catalog = GettextCatalog.ParseFromPoString(f);
 
                 if (catalog == null) throw new Exception("no catalog!");
 
                 Console.WriteLine("translations: " + catalog.Translations.Count);
+
+                if (fileInfo.Name.Contains("comment-last.po"))
+                {
+                    var t = catalog.Translations.SingleOrDefault(x => x.MessageId.String == "foo");
+                    Assert.That(t, Is.Not.Null);
+                    Assert.That(t.Fuzzy, Is.True);
+                }
             }
         }
 

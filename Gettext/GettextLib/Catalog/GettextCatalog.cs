@@ -105,6 +105,9 @@ namespace GettextLib.Catalog
                 // another parsing step
                 catalog.ParseHeaders();
 
+                // parse comments
+                catalog.ParseComments();
+
                 // build lookup structures
                 catalog.Finalize();
 
@@ -117,6 +120,26 @@ namespace GettextLib.Catalog
 
             if (catalog == null) throw new GettextException("Couldn't parse the catalog. Check the syntax.");
             return catalog;
+        }
+
+        private void ParseComments()
+        {
+            foreach (var translation in Translations)
+            {
+                if (translation.Comment.Lines != null)
+                {
+                    foreach (var t in translation.Comment.Lines)
+                    {
+                        if (t.StartsWith(","))
+                        {
+                            if (t.Contains("fuzzy"))
+                            {
+                                translation.Fuzzy = true;
+                            }
+                        }
+                    }
+                }
+            }
         }
 
         private void ParseHeaders()
