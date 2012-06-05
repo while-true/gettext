@@ -26,7 +26,7 @@ namespace GettextLib.Catalog
             NPlurals = 2;
             GetPluralIndex = n => n == 1 ? 0 : 1;
             Headers = new Dictionary<string, string>();
-            TranslateFuzzyTranslations = true;
+            TranslateFuzzyTranslations = false;
         }
 
         public const string ContextSeparator = "\u0004";
@@ -232,6 +232,7 @@ namespace GettextLib.Catalog
             MessageTranslations = new List<TranslationString>();
             MessageContext = new MultiLineString();
             Comment = new MultiLineString();
+            Fuzzy = false;
         }
 
         public class TranslationString
