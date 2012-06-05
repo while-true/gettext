@@ -1,10 +1,7 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using GettextLib;
+using System.Globalization;
 
-namespace GettextMvcLib
+namespace GettextLib
 {
     public class GettextTranslationContext
     {
@@ -16,6 +13,7 @@ namespace GettextMvcLib
             this.languageTranslation = languageTranslation;
         }
 
+        public CultureInfo Culture { get { return languageTranslation.Culture; } }
         public IGettext Gettext { get { return languageTranslation.Gettext; } }
     }
 }

@@ -44,14 +44,11 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Consts.cs" />
-    <Compile Include="GettextFactory.cs" />
     <Compile Include="GettextMetadataProvider.cs" />
     <Compile Include="GettextModelValidator.cs" />
     <Compile Include="GettextModelValidatorProvider.cs" />
     <Compile Include="GettextMvcIntegration.cs" />
     <Compile Include="GettextMvcUtils.cs" />
-    <Compile Include="GettextTranslationContext.cs" />
     <Compile Include="HttpContextHelper\S.cs" />
     <Compile Include="JavaScript\ControllerHelper.cs" />
     <Compile Include="MvcHtmlHelper\GettextExtensions.cs" />

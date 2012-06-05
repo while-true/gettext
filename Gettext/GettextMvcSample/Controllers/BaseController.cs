@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using GettextLib;
 using GettextMvcLib;
 
 namespace GettextMvcSample.Controllers
@@ -20,12 +21,12 @@ namespace GettextMvcSample.Controllers
             if (false)
             {
                 var gp = gf.GetPseudoContext();
-                gf.SetAsContextForCurrentRequest(gp, ViewData);
+                GettextMvcIntegration.SetAsContextForCurrentRequest(gp, this);
                 return;
             }
-
+            
             var gc = gf.GetContext("sl_SI");
-            gf.SetAsContextForCurrentRequest(gc, ViewData);
+            GettextMvcIntegration.SetAsContextForCurrentRequest(gc, this);
         }
     }
 }

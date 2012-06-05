@@ -1,21 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
-using System.Text;
-using System.Web.Mvc;
-using GettextLib;
 using GettextLib.Catalog;
-using Gettext = GettextLib.Gettext;
 
-namespace GettextMvcLib
+namespace GettextLib
 {
-
-    internal class LanguageTranslation
-    {
-        public string LangId { get; set; }
-        public IGettext Gettext { get; set; }
-    }
-
     public class GettextFactory
     {
         public GettextFactory()
@@ -25,14 +15,23 @@ namespace GettextMvcLib
 
         private List<LanguageTranslation> catalogs;
         
-        public void AddTranslation(string language, string content)
+        /// <summary>
+        /// Adds translations to the factory.
+        /// </summary>
+        /// <param name="languageId"></param>
+        /// <param name="poFileContent"></param>
+        /// <param name="culture">Culture to use for this translations. If it isn't specified, use the invariant culture.</param>
+        public void AddTranslation(string languageId, string poFileContent, CultureInfo culture = null)
         {
-            var catalog = GettextCatalog.ParseFromPoString(content);
-            
+            var catalog = GettextCatalog.ParseFromPoString(poFileContent);
+
+            culture = culture ?? CultureInfo.InvariantCulture;
+
             catalogs.Add(new LanguageTranslation
                              {
                                  Gettext = new Gettext(catalog),
-                                 LangId = language
+                                 LangId = languageId,
+                                 Culture = culture
                              });
         }
 
@@ -53,18 +52,26 @@ namespace GettextMvcLib
             return new GettextTranslationContext(l);
         }
 
+        /// <summary>
+        /// Return pseudoized strings.
+        /// </summary>
+        /// <returns></returns>
         public GettextTranslationContext GetPseudoContext()
         {
             return GetContext(Consts.GettextPseudoLanguage);
         }
 
-        public void SetAsContextForCurrentRequest(GettextTranslationContext ctx, ViewDataDictionary viewData)
+        /// <summary>
+        /// No translations - return what we get.
+        /// </summary>
+        /// <returns></returns>
+        public GettextTranslationContext GetNullContext()
         {
-            if (ctx == null) throw new ArgumentNullException("ctx");
-            if (viewData == null) throw new ArgumentNullException("viewData");
-
-            viewData.Add(Consts.GettextContextKey, ctx);
-            System.Web.HttpContext.Current.Items[Consts.GettextContextKey] = ctx;
+            return new GettextTranslationContext(new LanguageTranslation
+                                                     {
+                                                         LangId = "null",
+                                                         Gettext = new GettextDummy()
+                                                     });
         }
     }
 }

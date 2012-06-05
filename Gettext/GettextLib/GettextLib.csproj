@@ -41,14 +41,18 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Catalog\GettextCatalog.cs" />
+    <Compile Include="Consts.cs" />
     <Compile Include="ExpressionEvaluator\EvalLexer.cs" />
     <Compile Include="ExpressionEvaluator\EvalParser.cs" />
     <Compile Include="ExpressionEvaluator\Expr.cs" />
     <Compile Include="Gettext.cs" />
     <Compile Include="GettextDummy.cs" />
     <Compile Include="GettextException.cs" />
+    <Compile Include="GettextFactory.cs" />
     <Compile Include="GettextPseudo.cs" />
+    <Compile Include="GettextTranslationContext.cs" />
     <Compile Include="IGettext.cs" />
+    <Compile Include="LanguageTranslation.cs" />
     <Compile Include="Parser\PoLexer.cs" />
     <Compile Include="Parser\PoParser.cs" />
     <Compile Include="Parser\ShiftReduceParserCode.cs" />

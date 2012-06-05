@@ -8,15 +8,23 @@ using Gettext = GettextLib.Gettext;
 
 namespace GettextMvcLib.MvcHtmlHelper
 {
+    /// <summary>
+    /// These methods get the gettext context from the helper's ViewData.
+    /// </summary>
     public static class GettextExtensions
     {
+        private static GettextTranslationContext GetContext(HtmlHelper helper)
+        {
+            if (helper == null || helper.ViewData == null) return Utils.CreateNullContext();
+            var gc = helper.ViewData[Consts.GettextContextKey] as GettextTranslationContext;
+            if (gc == null) return Utils.CreateNullContext();
+
+            return gc;
+        }
+
         private static IGettext GetGettext(HtmlHelper helper)
         {
-            if (helper == null || helper.ViewData == null) return new GettextDummy();
-            var gc = helper.ViewData[Consts.GettextContextKey] as GettextTranslationContext;
-            if (gc == null) return new GettextDummy();
-
-            return gc.Gettext;
+            return GetContext(helper).Gettext;
         }
 
         public static string _(this HtmlHelper helper, string str)

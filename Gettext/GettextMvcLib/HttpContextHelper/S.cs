@@ -6,6 +6,9 @@ using GettextLib;
 
 namespace GettextMvcLib.HttpContextHelper
 {
+    /// <summary>
+    /// These methods retrieve the gettext context from the current HttpContext's items.
+    /// </summary>
     public static class S
     {
         public static string _(string msgid)

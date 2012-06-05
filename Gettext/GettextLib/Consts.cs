@@ -1,13 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-
-namespace GettextMvcLib
+﻿namespace GettextLib
 {
     public static class Consts
     {
         public const string GettextContextKey = "_gettext_context";
         public const string GettextPseudoLanguage = "__pseudo__";
+        public const string GettextNullLanguage = "__null__";
     }
 }
