@@ -21,20 +21,17 @@ namespace GettextMvcLib.MvcHtmlHelper
 
             return gc;
         }
-
-        private static IGettext GetGettext(HtmlHelper helper)
+        
+        public static GettextTranslatedString _(this HtmlHelper helper, string msgid)
         {
-            return GetContext(helper).Gettext;
+            var ctx = GetContext(helper);
+            return new GettextTranslatedString(ctx.Gettext._(msgid), ctx.Culture);
         }
 
-        public static string _(this HtmlHelper helper, string str)
+        public static GettextTranslatedString _(this HtmlHelper helper, string msgid, string msgidPlural, int n)
         {
-            return GetGettext(helper)._(str);
-        }
-
-        public static string _(this HtmlHelper helper, string msgid, string msgidPlural, int n)
-        {
-            return GetGettext(helper).NGettext(msgid, msgidPlural, n);
+            var ctx = GetContext(helper);
+            return new GettextTranslatedString(ctx.Gettext.NGettext(msgid, msgidPlural, n), ctx.Culture);
         }
     }
 }

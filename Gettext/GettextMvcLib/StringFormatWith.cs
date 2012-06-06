@@ -4,26 +4,21 @@ using System.Linq;
 using System.Text;
 using System.Text.RegularExpressions;
 using System.Web.UI;
+using GettextLib;
 
 namespace GettextMvcLib
 {
     public static class StringFormatWith
     {
-        public static string FormatWith(this string format, object source)
+        public static string FormatWith(this GettextTranslatedString format, object source)
         {
-            return FormatWith(format, null, source);
-        }
-
-        public static string FormatWith(this string format, IFormatProvider provider, object source)
-        {
-            if (format == null)
+            if (format.String == null)
                 throw new ArgumentNullException("format");
 
-            Regex r = new Regex(@"(?<start>\{)+(?<property>[\w\.\[\]]+)(?<format>:[^}]+)?(?<end>\})+",
-              RegexOptions.Compiled | RegexOptions.CultureInvariant | RegexOptions.IgnoreCase);
+            var r = new Regex(@"(?<start>\{)+(?<property>[\w\.\[\]]+)(?<format>:[^}]+)?(?<end>\})+", RegexOptions.Compiled | RegexOptions.CultureInvariant | RegexOptions.IgnoreCase);
 
-            List<object> values = new List<object>();
-            string rewrittenFormat = r.Replace(format, delegate(Match m)
+            var values = new List<object>();
+            var rewrittenFormat = r.Replace(format.String, delegate(Match m)
             {
                 Group startGroup = m.Groups["start"];
                 Group propertyGroup = m.Groups["property"];
@@ -34,11 +29,10 @@ namespace GettextMvcLib
                   ? source
                   : DataBinder.Eval(source, propertyGroup.Value));
 
-                return new string('{', startGroup.Captures.Count) + (values.Count - 1) + formatGroup.Value
-                  + new string('}', endGroup.Captures.Count);
+                return new string('{', startGroup.Captures.Count) + (values.Count - 1) + formatGroup.Value + new string('}', endGroup.Captures.Count);
             });
 
-            return string.Format(provider, rewrittenFormat, values.ToArray());
+            return string.Format(format.CultureInfo, rewrittenFormat, values.ToArray());
         }
     }
 }

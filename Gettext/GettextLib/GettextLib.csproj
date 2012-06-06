@@ -50,6 +50,7 @@
     <Compile Include="GettextException.cs" />
     <Compile Include="GettextFactory.cs" />
     <Compile Include="GettextPseudo.cs" />
+    <Compile Include="GettextTranslatedString.cs" />
     <Compile Include="GettextTranslationContext.cs" />
     <Compile Include="IGettext.cs" />
     <Compile Include="LanguageTranslation.cs" />

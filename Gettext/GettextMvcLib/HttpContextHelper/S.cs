@@ -11,24 +11,28 @@ namespace GettextMvcLib.HttpContextHelper
     /// </summary>
     public static class S
     {
-        public static string _(string msgid)
+        public static GettextTranslatedString _(string msgid)
         {
-            return GettextMvcUtils.GetGettext()._(msgid);
+            var ctx = GettextMvcUtils.GetTranslationContext();
+            return new GettextTranslatedString(ctx.Gettext._(msgid), ctx.Culture);
         }
 
-        public static string _(string msgid, string msgidPlural, long n)
+        public static GettextTranslatedString _(string msgid, string msgidPlural, long n)
         {
-            return GettextMvcUtils.GetGettext().NGettext(msgid, msgidPlural, n);
+            var ctx = GettextMvcUtils.GetTranslationContext();
+            return new GettextTranslatedString(ctx.Gettext.NGettext(msgid, msgidPlural, n), ctx.Culture);
         }
 
-        public static string PGettext(string msgctxt, string msgid)
+        public static GettextTranslatedString PGettext(string msgctxt, string msgid)
         {
-            return GettextMvcUtils.GetGettext().PGettext(msgctxt, msgid);
+            var ctx = GettextMvcUtils.GetTranslationContext();
+            return new GettextTranslatedString(ctx.Gettext.PGettext(msgctxt, msgid), ctx.Culture);
         }
 
-        public static string PNGettext(string msgctxt, string msgid, string msgidPlural, long n)
+        public static GettextTranslatedString PNGettext(string msgctxt, string msgid, string msgidPlural, long n)
         {
-            return GettextMvcUtils.GetGettext().PNGettext(msgctxt, msgid, msgidPlural, n);
+            var ctx = GettextMvcUtils.GetTranslationContext();
+            return new GettextTranslatedString(ctx.Gettext.PNGettext(msgctxt, msgid, msgidPlural, n), ctx.Culture);
         }
     }
 }
