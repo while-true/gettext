@@ -41,6 +41,7 @@ namespace GettextExtractorApp
             {
                 try
                 {
+
                     var a = Assembly.LoadFile(file.FullName);
 
                     ext.Parse(a);

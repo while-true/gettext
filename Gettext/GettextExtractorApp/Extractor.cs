@@ -31,7 +31,7 @@ namespace GettextExtractorApp
         public string ToPoString()
         {
             var sb = new StringBuilder();
-            if (false)
+            if (true)
             {
                 sb.Append(
                     @"# SOME DESCRIPTIVE TITLE.
@@ -50,7 +50,7 @@ msgstr """"
 ""Language-Team: LANGUAGE <LL@li.org>\n""
 ""Language: \n""
 ""MIME-Version: 1.0\n""
-""Content-Type: text/plain; charset=CHARSET\n""
+""Content-Type: text/plain; charset=UTF-8\n""
 ""Content-Transfer-Encoding: 8bit\n""");
                 sb.Append("\n\n");
             }
@@ -67,6 +67,12 @@ msgstr """"
                 foreach (var or in origins)
                 {
                     sb.AppendFormat("#: {0}\n", or);
+                }
+
+                var comments = group.Select(x => x.Comment).Where(x => !string.IsNullOrWhiteSpace(x)).Distinct().ToList();
+                foreach (var comment in comments)
+                {
+                    sb.AppendFormat("#. {0}\n", comment.Replace("\n", "").Replace("\r\n", ""));
                 }
 
                 sb.AppendFormat("msgid \"{0}\"\n", Escape(f.Str));
@@ -98,11 +104,13 @@ msgstr """"
         {
             public string Str { get; set; }
             public string Origin { get; set; }
+            public string Comment { get; set; }
 
-            public TranslationString(string str, string origin)
+            public TranslationString(string str, string origin, string comment)
             {
                 Str = str;
                 Origin = origin;
+                Comment = comment;
             }
         }
 
@@ -116,18 +124,22 @@ msgstr """"
             if (!string.IsNullOrWhiteSpace(originInfo)) o = originInfo + ".";
             else o = "";
 
+            string commentStr = "";
+            var comment = d.OfType<GettextLib.GettextCommentAttribute>().FirstOrDefault();
+            if (comment != null) commentStr = comment.Comment;
+
             foreach (var attribute in d)
             {
                 var displayAttribute = attribute as DisplayAttribute;
                 if (displayAttribute != null)
                 {
-                    translations.Add(new TranslationString(displayAttribute.Name, o + info.Name));
+                    translations.Add(new TranslationString(displayAttribute.Name, o + info.Name, commentStr));
                 }
 
                 var va = attribute as ValidationAttribute;
                 if (va != null)
                 {
-                    translations.Add(new TranslationString(va.ErrorMessage, o + info.Name));
+                    translations.Add(new TranslationString(va.ErrorMessage, o + info.Name, commentStr));
                 }
             }
         }
