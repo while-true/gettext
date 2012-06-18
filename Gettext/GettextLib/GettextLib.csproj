@@ -51,6 +51,7 @@
     <Compile Include="GettextFactory.cs" />
     <Compile Include="GettextPseudo.cs" />
     <Compile Include="GettextTranslatedString.cs" />
+    <Compile Include="GettextCommentAttribute.cs" />
     <Compile Include="GettextTranslationContext.cs" />
     <Compile Include="IGettext.cs" />
     <Compile Include="LanguageTranslation.cs" />

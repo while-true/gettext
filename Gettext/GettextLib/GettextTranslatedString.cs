@@ -24,5 +24,10 @@ namespace GettextLib
             if (g == null) return string.Empty;
             return g.String;
         }
+
+        public override string ToString()
+        {
+            return String;
+        }
     }
 }

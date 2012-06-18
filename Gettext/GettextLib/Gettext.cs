@@ -39,8 +39,13 @@ namespace GettextLib
         public string _(string msgid)
         {
             var l = Lookup(null, msgid);
+
             if (l == null) return msgid;
-            return l.Message.String;
+
+			var translatedString = l.Message.String;
+            if (string.IsNullOrWhiteSpace(translatedString)) return msgid;
+
+			return translatedString;
         }
 
         public string NGettext(string msgid, string msgidPlural, long n)
@@ -54,10 +59,13 @@ namespace GettextLib
             if (pl == null) goto fallback;
 
             var idx = Catalog.GetPluralIndex(n);
-            var t = pl.MessageTranslations.SingleOrDefault(x => x.Index == idx);
+            var t = pl.MessageTranslations.FirstOrDefault(x => x.Index == idx);
             if (t == null) goto fallback;
 
-            return t.Message.String;
+            var translatedString = t.Message.String;
+            if (string.IsNullOrWhiteSpace(translatedString)) goto fallback;
+
+            return translatedString;
 
             fallback:
             return n == 1 ? msgid : msgidPlural;
@@ -67,6 +75,10 @@ namespace GettextLib
         {
             var l = Lookup(msgctxt, msgid);
             if (l == null) return msgid;
+
+            var translatedString = l.Message.String;
+            if (string.IsNullOrWhiteSpace(translatedString)) return msgid;
+
             return l.Message.String;
         }
 
