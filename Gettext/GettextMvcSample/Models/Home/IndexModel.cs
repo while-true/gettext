@@ -14,10 +14,12 @@ namespace GettextMvcSample.Models.Home
 
         [Required(ErrorMessage = "Hello world from Required attribute")]
         [Display(Name = "Email Field")]
+        [GettextLib.GettextComment("A comment")]
         public string Email { get; set; }
 
-        [MaxLength(5, ErrorMessage = "Hello world from MaxLength attribute")]
+        [MaxLength(5, ErrorMessage = "Hello world from MaxLength attribute čćž")]
         [Display(Name = "Too Long Field")]
+        [GettextLib.GettextComment("Another comment čćž")]
         public string TooLong { get; set; }
 
         public IndexAnotherModel AnotherModel { get; set; }
