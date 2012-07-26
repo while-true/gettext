@@ -1,8 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text.RegularExpressions;
 using GettextLib.ExpressionEvaluator;
+using JetBrains.Annotations;
 using Scanner = GettextLib.Parser.Scanner;
 
 namespace GettextLib.Catalog
@@ -89,13 +91,17 @@ namespace GettextLib.Catalog
             }
         }
 
-        public static GettextCatalog ParseFromPoString(string poString)
+        public static GettextCatalog ParseFromStream([NotNull] Stream poStream)
         {
+            if (poStream == null) throw new ArgumentNullException("poStream");
+
             GettextCatalog catalog = null;
             try
             {
+                
                 var lexer = new Scanner();
-                lexer.SetSource(poString, 0);
+                lexer.SetSource(poStream);
+
                 var parser = new Parser.Parser(lexer);
                 parser.Parse();
 

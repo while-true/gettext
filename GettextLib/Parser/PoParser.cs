@@ -4,11 +4,11 @@
 
 // GPPG version 1.5.0
 // Machine:  GARFIELD
-// DateTime: 4.6.2012 15:22:19
+// DateTime: 26.7.2012 16:36:41
 // UserName: Rudi
-// Input file <po.y - 4.6.2012 15:22:17>
+// Input file <po.y - 26.7.2012 15:22:47>
 
-// options: no-lines diagnose & report gplex
+// options: no-lines gplex
 
 using System;
 using System.Collections.Generic;

@@ -1,12 +1,12 @@
 %namespace GettextLib.Parser
-%option verbose summary nofiles out:PoLexer.cs codePage:utf-8 unicode
+%option verbose summary out:PoLexer.cs
 %visibility internal
 %tokentype Tokens
 
 digit		[0-9]
 WhiteSpace	[ \t]
 Eol		(\r\n?|\n)
-LineComment	"#".*
+LineComment	"#"
 
 %x COMMENT
 %x STR
@@ -14,9 +14,14 @@ LineComment	"#".*
 %%
 	StringBuilder sbStr = new StringBuilder();
 
-{LineComment}+	{ yylval.String = yytext.Substring(1); BEGIN(COMMENT); }
+{LineComment}	{
+	yylval.String = ""; BEGIN(COMMENT); 
+}
 <COMMENT>{
 	{Eol} { yylval.String += "\n"; BEGIN(INITIAL); return (int) Tokens.COMMENT;  }
+	<<EOF>> { yylval.String += "\n"; BEGIN(INITIAL); return (int) Tokens.COMMENT; }
+	
+	.* { yylval.String += yytext; }
 }
 
 \"	sbStr = new StringBuilder(); BEGIN(STR);
@@ -55,7 +60,7 @@ LineComment	"#".*
 // Remove whitespaces.
 {WhiteSpace}+	{ ; }
 
-// End of Line (Haven't yet figured it how to do this :-) )
+// End of Line
 {Eol}+		{ return (int) Tokens.EOL; }
 
 

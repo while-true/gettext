@@ -56,6 +56,7 @@
     <Compile Include="GettextUtils.cs" />
     <Compile Include="IGettext.cs" />
     <Compile Include="LanguageTranslation.cs" />
+    <Compile Include="Libs\ResharperAnnotations.cs" />
     <Compile Include="Libs\ShiftReduceParserCode.cs" />
     <Compile Include="Parser\PoLexer.cs" />
     <Compile Include="Parser\PoParser.cs" />
