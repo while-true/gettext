@@ -42,6 +42,7 @@ namespace GettextLib.Catalog
         {
             var key = LookupKey(messageContext, messageId, messageIdPlural);
 
+            if (string.IsNullOrWhiteSpace(key)) return null;
 
             Translation trans;
             if (TranslationLookup.TryGetValue(key, out trans))
@@ -160,7 +161,17 @@ namespace GettextLib.Catalog
                 var m = r.Match(line);
                 if (m.Success)
                 {
-                    Headers.Add(m.Groups[1].Value, m.Groups[2].Value);
+                    var key = m.Groups[1].Value;
+                    var value = m.Groups[2].Value;
+
+                    if (!Headers.ContainsKey(key))
+                    {
+                        Headers.Add(key, value);
+                    } else
+                    {
+                        // overwrite
+                        Headers[key] = value;
+                    }
                 }
             }
 
