@@ -56,9 +56,9 @@
     <Compile Include="GettextUtils.cs" />
     <Compile Include="IGettext.cs" />
     <Compile Include="LanguageTranslation.cs" />
+    <Compile Include="Libs\ShiftReduceParserCode.cs" />
     <Compile Include="Parser\PoLexer.cs" />
     <Compile Include="Parser\PoParser.cs" />
-    <Compile Include="Parser\ShiftReduceParserCode.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="StringFormatWith.cs" />
   </ItemGroup>
