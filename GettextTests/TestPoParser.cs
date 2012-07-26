@@ -42,10 +42,20 @@ namespace GettextTests
         }
 
         [Test]
+        public void TestBasic2()
+        {
+            using (var f = new FileInfo("test-po/test_basic_2.po").OpenRead())
+            {
+                var catalog = GettextCatalog.ParseFromStream(f);
+            }
+        }
+
+        [Test]
         public void TestCommentOnly()
         {
             //using (var f = new FileInfo("test-po/comment-last.po").OpenRead())
-            using (var f = new FileInfo("test-po/comment-only.po").OpenRead())
+            //using (var f = new FileInfo("test-po/comment-only.po").OpenRead())
+            using (var f = new FileInfo("test-po/test_basic_2.po").OpenRead())
             {
                 ScannerDump(f);
             }
