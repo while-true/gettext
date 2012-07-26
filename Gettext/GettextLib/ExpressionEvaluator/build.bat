@@ -1,1 +1,1 @@
-gppg /gplex /no-lines eval.y && gplex eval
+..\..\buildtools\gppg /gplex /no-lines eval.y && ..\..\buildtools\gplex eval

@@ -1,1 +1,1 @@
-gppg /gplex /no-lines /verbose /report po.y && gplex po
+..\..\buildtools\gppg /gplex /no-lines po.y && ..\..\buildtools\gplex po
