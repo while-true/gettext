@@ -37,17 +37,26 @@ namespace GettextLib
 
         public GettextTranslationContext GetContext(string langId)
         {
-            if (langId == Consts.GettextPseudoLanguage)
+            if (langId == GettextConsts.GettextPseudoLanguage)
             {
                 return new GettextTranslationContext(new LanguageTranslation
                                                          {
-                                                             LangId = Consts.GettextPseudoLanguage,
+                                                             LangId = GettextConsts.GettextPseudoLanguage,
                                                              Gettext = new GettextPseudo()
                                                          });
             }
 
+			if (langId == GettextConsts.GettextDefaultLanguage)
+			{
+				return GetNullContext();
+			}
+			
             var l = catalogs.SingleOrDefault(x => x.LangId == langId);
-            if (l == null) throw new Exception("Language not found");
+            if (l == null)
+            {
+                //throw new Exception("Language not found");
+                return GetNullContext();
+            }
 
             return new GettextTranslationContext(l);
         }
@@ -58,7 +67,7 @@ namespace GettextLib
         /// <returns></returns>
         public GettextTranslationContext GetPseudoContext()
         {
-            return GetContext(Consts.GettextPseudoLanguage);
+            return GetContext(GettextConsts.GettextPseudoLanguage);
         }
 
         /// <summary>

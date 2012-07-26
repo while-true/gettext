@@ -17,14 +17,14 @@ namespace GettextMvcLib
         public static GettextTranslationContext GetTranslationContext()
         {
             if (System.Web.HttpContext.Current == null) goto dummy;
-            var gc = System.Web.HttpContext.Current.Items[Consts.GettextContextKey] as GettextTranslationContext;
+            var gc = System.Web.HttpContext.Current.Items[GettextConsts.GettextContextKey] as GettextTranslationContext;
             if (gc == null) goto dummy;
 
             return gc;
 
             dummy:
 
-            return Utils.CreateNullContext();
+            return GettextUtils.CreateNullContext();
         }
 
         /// <summary>

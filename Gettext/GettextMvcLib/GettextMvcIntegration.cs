@@ -33,8 +33,8 @@ namespace GettextMvcLib
             if (ctx == null) throw new ArgumentNullException("ctx");
             if (controllerBase == null) throw new ArgumentNullException("controllerBase");
 
-            controllerBase.ViewData.Add(Consts.GettextContextKey, ctx);
-            System.Web.HttpContext.Current.Items[Consts.GettextContextKey] = ctx;
+            controllerBase.ViewData.Add(GettextConsts.GettextContextKey, ctx);
+            System.Web.HttpContext.Current.Items[GettextConsts.GettextContextKey] = ctx;
         }
     }
 }

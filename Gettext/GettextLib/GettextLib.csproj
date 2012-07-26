@@ -41,11 +41,11 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Catalog\GettextCatalog.cs" />
-    <Compile Include="Consts.cs" />
     <Compile Include="ExpressionEvaluator\EvalLexer.cs" />
     <Compile Include="ExpressionEvaluator\EvalParser.cs" />
     <Compile Include="ExpressionEvaluator\Expr.cs" />
     <Compile Include="Gettext.cs" />
+    <Compile Include="GettextConsts.cs" />
     <Compile Include="GettextDummy.cs" />
     <Compile Include="GettextException.cs" />
     <Compile Include="GettextFactory.cs" />
@@ -53,13 +53,14 @@
     <Compile Include="GettextTranslatedString.cs" />
     <Compile Include="GettextCommentAttribute.cs" />
     <Compile Include="GettextTranslationContext.cs" />
+    <Compile Include="GettextUtils.cs" />
     <Compile Include="IGettext.cs" />
     <Compile Include="LanguageTranslation.cs" />
     <Compile Include="Parser\PoLexer.cs" />
     <Compile Include="Parser\PoParser.cs" />
     <Compile Include="Parser\ShiftReduceParserCode.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Utils.cs" />
+    <Compile Include="StringFormatWith.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

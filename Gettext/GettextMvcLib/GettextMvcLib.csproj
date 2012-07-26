@@ -48,6 +48,7 @@
     <Compile Include="GettextModelValidator.cs" />
     <Compile Include="GettextModelValidatorProvider.cs" />
     <Compile Include="GettextMvcIntegration.cs" />
+    <Compile Include="GettextMvcTranslatedString.cs" />
     <Compile Include="GettextMvcUtils.cs" />
     <Compile Include="HttpContextHelper\S.cs" />
     <Compile Include="JavaScript\ControllerHelper.cs" />
