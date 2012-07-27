@@ -4,11 +4,11 @@
 
 // GPPG version 1.5.0
 // Machine:  GARFIELD
-// DateTime: 4.6.2012 15:22:19
+// DateTime: 27.7.2012 11:55:58
 // UserName: Rudi
-// Input file <po.y - 4.6.2012 15:22:17>
+// Input file <po.y - 27.7.2012 11:55:56>
 
-// options: no-lines diagnose & report gplex
+// options: no-lines gplex
 
 using System;
 using System.Collections.Generic;
@@ -65,47 +65,49 @@ internal partial class Parser: ShiftReduceParser<ValueType, LexLocation>
 #pragma warning disable 649
   private static Dictionary<int, string> aliasses;
 #pragma warning restore 649
-  private static Rule[] rules = new Rule[22];
-  private static State[] states = new State[33];
+  private static Rule[] rules = new Rule[24];
+  private static State[] states = new State[35];
   private static string[] nonTerms = new string[] {
       "Catalog", "MultiLineString", "MessageBlocks", "MessageBlock", "Comments", 
       "MessageComments", "MessageTranslation", "MessageTranslations", "MessageContext", 
       "MessageId", "$accept", };
 
   static Parser() {
-    states[0] = new State(new int[]{11,31,8,-9,5,-9},new int[]{-1,1,-3,3,-4,32,-6,5,-5,27});
+    states[0] = new State(new int[]{11,33,8,-9,5,-9},new int[]{-1,1,-3,3,-4,34,-6,5,-5,29});
     states[1] = new State(new int[]{2,2});
     states[2] = new State(-1);
-    states[3] = new State(new int[]{11,31,2,-2,8,-9,5,-9},new int[]{-4,4,-6,5,-5,27});
+    states[3] = new State(new int[]{11,33,2,-2,8,-9,5,-9},new int[]{-4,4,-6,5,-5,29});
     states[4] = new State(-4);
-    states[5] = new State(new int[]{8,25,5,-13},new int[]{-9,6});
-    states[6] = new State(new int[]{5,21},new int[]{-10,7});
-    states[7] = new State(new int[]{7,10},new int[]{-8,8,-7,20});
+    states[5] = new State(new int[]{8,27,5,-13},new int[]{-9,6});
+    states[6] = new State(new int[]{5,23},new int[]{-10,7});
+    states[7] = new State(new int[]{7,10},new int[]{-8,8,-7,22});
     states[8] = new State(new int[]{7,10,11,-5,8,-5,5,-5,2,-5},new int[]{-7,9});
     states[9] = new State(-15);
-    states[10] = new State(new int[]{9,14,3,18},new int[]{-2,11});
+    states[10] = new State(new int[]{9,15,3,19},new int[]{-2,11});
     states[11] = new State(new int[]{3,12,7,-16,11,-16,8,-16,5,-16,2,-16});
-    states[12] = new State(new int[]{12,13});
-    states[13] = new State(-21);
-    states[14] = new State(new int[]{4,15});
-    states[15] = new State(new int[]{10,16});
-    states[16] = new State(new int[]{3,18},new int[]{-2,17});
-    states[17] = new State(new int[]{3,12,7,-17,11,-17,8,-17,5,-17,2,-17});
-    states[18] = new State(new int[]{12,19});
-    states[19] = new State(-20);
-    states[20] = new State(-14);
-    states[21] = new State(new int[]{3,18},new int[]{-2,22});
-    states[22] = new State(new int[]{6,23,3,12,7,-10});
-    states[23] = new State(new int[]{3,18},new int[]{-2,24});
-    states[24] = new State(new int[]{3,12,7,-11});
-    states[25] = new State(new int[]{3,18},new int[]{-2,26});
-    states[26] = new State(new int[]{3,12,5,-12});
-    states[27] = new State(new int[]{11,28,12,29,2,30,8,-8,5,-8});
-    states[28] = new State(-19);
-    states[29] = new State(-6);
-    states[30] = new State(-7);
-    states[31] = new State(-18);
-    states[32] = new State(-3);
+    states[12] = new State(new int[]{12,13,2,14});
+    states[13] = new State(-22);
+    states[14] = new State(-23);
+    states[15] = new State(new int[]{4,16});
+    states[16] = new State(new int[]{10,17});
+    states[17] = new State(new int[]{3,19},new int[]{-2,18});
+    states[18] = new State(new int[]{3,12,7,-17,11,-17,8,-17,5,-17,2,-17});
+    states[19] = new State(new int[]{12,20,2,21});
+    states[20] = new State(-20);
+    states[21] = new State(-21);
+    states[22] = new State(-14);
+    states[23] = new State(new int[]{3,19},new int[]{-2,24});
+    states[24] = new State(new int[]{6,25,3,12,7,-10});
+    states[25] = new State(new int[]{3,19},new int[]{-2,26});
+    states[26] = new State(new int[]{3,12,7,-11});
+    states[27] = new State(new int[]{3,19},new int[]{-2,28});
+    states[28] = new State(new int[]{3,12,5,-12});
+    states[29] = new State(new int[]{11,30,2,31,12,32,8,-8,5,-8});
+    states[30] = new State(-19);
+    states[31] = new State(-6);
+    states[32] = new State(-7);
+    states[33] = new State(-18);
+    states[34] = new State(-3);
 
     for (int sNo = 0; sNo < states.Length; sNo++) states[sNo].number = sNo;
 
@@ -114,8 +116,8 @@ internal partial class Parser: ShiftReduceParser<ValueType, LexLocation>
     rules[3] = new Rule(-3, new int[]{-4});
     rules[4] = new Rule(-3, new int[]{-3,-4});
     rules[5] = new Rule(-4, new int[]{-6,-9,-10,-8});
-    rules[6] = new Rule(-4, new int[]{-5,12});
-    rules[7] = new Rule(-4, new int[]{-5,2});
+    rules[6] = new Rule(-4, new int[]{-5,2});
+    rules[7] = new Rule(-4, new int[]{-5,12});
     rules[8] = new Rule(-6, new int[]{-5});
     rules[9] = new Rule(-6, new int[]{});
     rules[10] = new Rule(-10, new int[]{5,-2});
@@ -129,7 +131,9 @@ internal partial class Parser: ShiftReduceParser<ValueType, LexLocation>
     rules[18] = new Rule(-5, new int[]{11});
     rules[19] = new Rule(-5, new int[]{-5,11});
     rules[20] = new Rule(-2, new int[]{3,12});
-    rules[21] = new Rule(-2, new int[]{-2,3,12});
+    rules[21] = new Rule(-2, new int[]{3,2});
+    rules[22] = new Rule(-2, new int[]{-2,3,12});
+    rules[23] = new Rule(-2, new int[]{-2,3,2});
   }
 
   protected override void Initialize() {
@@ -231,9 +235,21 @@ internal partial class Parser: ShiftReduceParser<ValueType, LexLocation>
 {
 				CurrentSemanticValue.multiLineString = new GettextLib.Catalog.MultiLineString();
 				CurrentSemanticValue.multiLineString.AddLine(ValueStack[ValueStack.Depth-2].String);
-			}
+		     }
         break;
-      case 21: // MultiLineString -> MultiLineString, STRING, EOL
+      case 21: // MultiLineString -> STRING, EOF
+{
+				CurrentSemanticValue.multiLineString = new GettextLib.Catalog.MultiLineString();
+				CurrentSemanticValue.multiLineString.AddLine(ValueStack[ValueStack.Depth-2].String);	
+	             }
+        break;
+      case 22: // MultiLineString -> MultiLineString, STRING, EOL
+{
+						ValueStack[ValueStack.Depth-3].multiLineString.AddLine(ValueStack[ValueStack.Depth-2].String);
+						CurrentSemanticValue.multiLineString = ValueStack[ValueStack.Depth-3].multiLineString;
+					}
+        break;
+      case 23: // MultiLineString -> MultiLineString, STRING, EOF
 {
 						ValueStack[ValueStack.Depth-3].multiLineString.AddLine(ValueStack[ValueStack.Depth-2].String);
 						CurrentSemanticValue.multiLineString = ValueStack[ValueStack.Depth-3].multiLineString;

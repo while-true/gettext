@@ -16,7 +16,10 @@ namespace GettextMvcSample.Controllers
 
             var mapPath = System.Web.HttpContext.Current.Server.MapPath("~/po/sl_SI/messages.po");
 
-            gf.AddTranslation("sl_SI", System.IO.File.ReadAllText(mapPath));
+            using (var file = System.IO.File.OpenRead(mapPath))
+            {
+                gf.AddTranslation("sl_SI", file);
+            }
 
             if (false)
             {

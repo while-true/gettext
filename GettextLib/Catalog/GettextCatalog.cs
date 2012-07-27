@@ -1,8 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
+using System.Text;
 using System.Text.RegularExpressions;
 using GettextLib.ExpressionEvaluator;
+using JetBrains.Annotations;
 using Scanner = GettextLib.Parser.Scanner;
 
 namespace GettextLib.Catalog
@@ -89,13 +92,17 @@ namespace GettextLib.Catalog
             }
         }
 
-        public static GettextCatalog ParseFromPoString(string poString)
+        public static GettextCatalog ParseFromStream([NotNull] Stream poStream)
         {
+            if (poStream == null) throw new ArgumentNullException("poStream");
+
             GettextCatalog catalog = null;
             try
             {
+                
                 var lexer = new Scanner();
-                lexer.SetSource(poString, 0);
+                lexer.SetSource(poStream);
+
                 var parser = new Parser.Parser(lexer);
                 parser.Parse();
 
@@ -105,6 +112,9 @@ namespace GettextLib.Catalog
 
                 // another parsing step
                 catalog.ParseHeaders();
+
+                // transform all strings into internal UTF-8 representation
+                catalog.ConvertStringsToUtf8();
 
                 // parse comments
                 catalog.ParseComments();
@@ -121,6 +131,58 @@ namespace GettextLib.Catalog
 
             if (catalog == null) throw new GettextException("Couldn't parse the catalog. Check the syntax.");
             return catalog;
+        }
+
+        private void ConvertStringsToUtf8()
+        {
+            var sourceCodePage = "";
+            {
+                if (Headers["Content-Type"] != null)
+                {
+                    var ct = (Headers["Content-Type"] ?? "").Trim();
+
+                    var r = new Regex("(.*?)charset=(.*)");
+                    var m = r.Match(ct);
+                    if (m.Success)
+                    {
+                        sourceCodePage = m.Groups[2].Value;
+                    }
+                }
+            }
+
+            if (!string.IsNullOrWhiteSpace(sourceCodePage))
+            {
+                var enc = Encoding.GetEncoding(sourceCodePage);
+                
+                foreach (var translation in Translations)
+                {
+                    Convert(translation.Comment, enc);
+                    Convert(translation.MessageContext, enc);
+                    Convert(translation.MessageId, enc);
+                    Convert(translation.MessageIdPlural, enc);
+
+                    foreach (var t in translation.MessageTranslations)
+                    {
+                        Convert(t.Message, enc);
+                    }
+                }
+
+                foreach (var k in Headers.Keys.ToList())
+                {
+                    Headers[k] = Convert(Headers[k], enc);
+                }
+            }
+        }
+
+        private static void Convert(MultiLineString str, Encoding enc)
+        {
+            str.Lines = str.Lines.Select(s => Convert(s, enc)).ToList();
+        }
+
+        private static string Convert(String str, Encoding enc)
+        {
+            var b = str.Select(c => (byte)c).ToArray();
+            return enc.GetString(b);
         }
 
         private void ParseComments()
