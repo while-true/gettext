@@ -25,17 +25,24 @@ namespace GettextTests
                 using (var f = fileInfo.OpenRead())
                 {
 
-                    var catalog = GettextCatalog.ParseFromStream(f);
-
-                    if (catalog == null) throw new Exception("no catalog!");
-
-                    Console.WriteLine("translations: " + catalog.Translations.Count);
-
-                    if (fileInfo.Name.Contains("comment-last.po"))
+                    try
                     {
-                        var t = catalog.Translations.SingleOrDefault(x => x.MessageId.String == "foo");
-                        Assert.That(t, Is.Not.Null);
-                        Assert.That(t.Fuzzy, Is.True);
+                        var catalog = GettextCatalog.ParseFromStream(f);
+
+                        if (catalog == null) throw new Exception("no catalog!");
+
+                        Console.WriteLine("translations: " + catalog.Translations.Count);
+
+                        if (fileInfo.Name.Contains("comment-last.po"))
+                        {
+                            var t = catalog.Translations.SingleOrDefault(x => x.MessageId.String == "foo");
+                            Assert.That(t, Is.Not.Null);
+                            Assert.That(t.Fuzzy, Is.True);
+                        }
+                    } catch (Exception)
+                    {
+                        throw;
+                        //Console.WriteLine("CRASH");
                     }
                 }
             }
@@ -44,7 +51,8 @@ namespace GettextTests
         [Test]
         public void TestBasic2()
         {
-            using (var f = new FileInfo("test-po/test_basic_2.po").OpenRead())
+            //using (var f = new FileInfo("test-po/test_basic_2.po").OpenRead())
+            using (var f = new FileInfo("test-po/comment-last.po").OpenRead())
             {
                 var catalog = GettextCatalog.ParseFromStream(f);
             }
@@ -53,9 +61,9 @@ namespace GettextTests
         [Test]
         public void TestCommentOnly()
         {
-            //using (var f = new FileInfo("test-po/comment-last.po").OpenRead())
+            using (var f = new FileInfo("test-po/comment-last.po").OpenRead())
             //using (var f = new FileInfo("test-po/comment-only.po").OpenRead())
-            using (var f = new FileInfo("test-po/test_basic_2.po").OpenRead())
+            //using (var f = new FileInfo("test-po/test_basic_2.po").OpenRead())
             {
                 ScannerDump(f);
             }

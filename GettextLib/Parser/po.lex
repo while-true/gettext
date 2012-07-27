@@ -1,12 +1,12 @@
 %namespace GettextLib.Parser
-%option verbose summary out:PoLexer.cs
+%option verbose summary out:PoLexer.cs codepage:raw stack
 %visibility internal
 %tokentype Tokens
 
 digit		[0-9]
 WhiteSpace	[ \t]
 Eol		(\r\n?|\n)
-LineComment	"#"
+LineComment	"#".*
 
 %x COMMENT
 %x STR
@@ -15,13 +15,12 @@ LineComment	"#"
 	StringBuilder sbStr = new StringBuilder();
 
 {LineComment}	{
-	yylval.String = ""; BEGIN(COMMENT); 
+	yylval.String = yytext.Substring(1);
+	yy_push_state (COMMENT);
+	return (int) Tokens.COMMENT;
 }
 <COMMENT>{
-	{Eol} { yylval.String += "\n"; BEGIN(INITIAL); return (int) Tokens.COMMENT;  }
-	<<EOF>> { yylval.String += "\n"; BEGIN(INITIAL); return (int) Tokens.COMMENT; }
-	
-	.* { yylval.String += yytext; }
+	{Eol} { yy_pop_state (); }
 }
 
 \"	sbStr = new StringBuilder(); BEGIN(STR);

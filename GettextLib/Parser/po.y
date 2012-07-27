@@ -86,8 +86,8 @@ MessageBlock
 			
 			$$.MessageTranslations = $4;
 		}
-	| Comments EOL
 	| Comments EOF
+	| Comments EOL
 	;
 
 MessageComments
@@ -140,11 +140,19 @@ Comments
 	;
 
 MultiLineString
-	: STRING EOL	{
+	: STRING EOL {
 				$$ = new GettextLib.Catalog.MultiLineString();
 				$$.AddLine($1);
-			}
+		     }
+	| STRING EOF {
+				$$ = new GettextLib.Catalog.MultiLineString();
+				$$.AddLine($1);	
+	             }
 	| MultiLineString STRING EOL	{
+						$1.AddLine($2);
+						$$ = $1;
+					}
+	| MultiLineString STRING EOF	{
 						$1.AddLine($2);
 						$$ = $1;
 					}
