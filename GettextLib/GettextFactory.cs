@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Globalization;
+using System.IO;
 using System.Linq;
 using GettextLib.Catalog;
 
@@ -21,9 +22,9 @@ namespace GettextLib
         /// <param name="languageId"></param>
         /// <param name="poFileContent"></param>
         /// <param name="culture">Culture to use for this translations. If it isn't specified, use the invariant culture.</param>
-        public void AddTranslation(string languageId, string poFileContent, CultureInfo culture = null)
+        public void AddTranslation(string languageId, Stream poFileContent, CultureInfo culture = null)
         {
-            var catalog = GettextCatalog.ParseFromPoString(poFileContent);
+            var catalog = GettextCatalog.ParseFromStream(poFileContent);
 
             culture = culture ?? CultureInfo.InvariantCulture;
 

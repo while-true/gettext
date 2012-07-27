@@ -22,20 +22,81 @@ namespace GettextTests
             foreach (var fileInfo in files)
             {
                 Console.WriteLine(fileInfo.FullName);
-                var f = File.ReadAllText(fileInfo.FullName);
-
-                var catalog = GettextCatalog.ParseFromPoString(f);
-
-                if (catalog == null) throw new Exception("no catalog!");
-
-                Console.WriteLine("translations: " + catalog.Translations.Count);
-
-                if (fileInfo.Name.Contains("comment-last.po"))
+                using (var f = fileInfo.OpenRead())
                 {
-                    var t = catalog.Translations.SingleOrDefault(x => x.MessageId.String == "foo");
-                    Assert.That(t, Is.Not.Null);
-                    Assert.That(t.Fuzzy, Is.True);
+
+                    try
+                    {
+                        var catalog = GettextCatalog.ParseFromStream(f);
+
+                        if (catalog == null) throw new Exception("no catalog!");
+
+                        Console.WriteLine("translations: " + catalog.Translations.Count);
+
+                        if (fileInfo.Name.Contains("comment-last.po"))
+                        {
+                            var t = catalog.Translations.SingleOrDefault(x => x.MessageId.String == "foo");
+                            Assert.That(t, Is.Not.Null);
+                            Assert.That(t.Fuzzy, Is.True);
+                        }
+                    } catch (Exception)
+                    {
+                        throw;
+                        //Console.WriteLine("CRASH");
+                    }
                 }
+            }
+        }
+
+        [Test]
+        public void TestBasic2()
+        {
+            //using (var f = new FileInfo("test-po/test_basic_2.po").OpenRead())
+            using (var f = new FileInfo("test-po/comment-last.po").OpenRead())
+            {
+                var catalog = GettextCatalog.ParseFromStream(f);
+            }
+        }
+
+        [Test]
+        public void TestCommentOnly()
+        {
+            using (var f = new FileInfo("test-po/comment-last.po").OpenRead())
+            //using (var f = new FileInfo("test-po/comment-only.po").OpenRead())
+            //using (var f = new FileInfo("test-po/test_basic_2.po").OpenRead())
+            {
+                ScannerDump(f);
+            }
+        }
+
+        private void ScannerDump(Stream s)
+        {
+            var scanner = new GettextLib.Parser.Scanner();
+            scanner.SetSource(s);
+
+            int tok;
+            do
+            {
+                tok = scanner.yylex();
+                if (Enum.IsDefined(typeof(GettextLib.Parser.Tokens), tok))
+                {
+                    var t = (GettextLib.Parser.Tokens)tok;
+
+                    Console.WriteLine("Token " + t);
+                }
+            } while (tok > (int)GettextLib.Parser.Tokens.EOF);
+        }
+
+        [Test]
+        public void TestPoParserIso8859_15()
+        {
+            var f = new FileInfo("test-po/test_iso-8859-15.po");
+
+            using (var fs = f.OpenRead())
+            {
+                var catalog = GettextCatalog.ParseFromStream(fs);
+
+                Console.Write(catalog.Translations.Count);
             }
         }
 
@@ -111,23 +172,26 @@ namespace GettextTests
         [Test]
         public void TestPluralTranslations()
         {
-            var catalog = GettextCatalog.ParseFromPoString(File.ReadAllText("po\\test-plural-slo.po"));
-            var gt = new Gettext(catalog);
-
+            using (var fileStream = File.OpenRead("po\\test-plural-slo.po"))
             {
-                var msgid = "{0} file";
-                var msgidPlural = "{0} files";
+                var catalog = GettextCatalog.ParseFromStream(fileStream);
+                var gt = new Gettext(catalog);
 
-                var t = new[]
-                            {
-                                0, 1, 2, 3, 4, 5,
-                                100, 101, 102, 103, 104, 105
-                            };
-
-                foreach (var i in t)
                 {
-                    var s = string.Format(gt.NGettext(msgid, msgidPlural, i), i);
-                    Console.WriteLine(s);
+                    var msgid = "{0} file";
+                    var msgidPlural = "{0} files";
+
+                    var t = new[]
+                        {
+                            0, 1, 2, 3, 4, 5,
+                            100, 101, 102, 103, 104, 105
+                        };
+
+                    foreach (var i in t)
+                    {
+                        var s = string.Format(gt.NGettext(msgid, msgidPlural, i), i);
+                        Console.WriteLine(s);
+                    }
                 }
             }
         }
