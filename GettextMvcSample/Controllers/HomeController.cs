@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using GettextLib;
 using GettextMvcLib;
 using GettextMvcLib.HttpContextHelper;
 using GettextMvcLib.JavaScript;
@@ -23,7 +24,7 @@ namespace GettextMvcSample.Controllers
             model.Message = S._("Hello world from Controller code! čćžđš");
             model.Email = "";
             model.TooLong = "stringy";
-            model.Message2 = S._("Hello {username}!").FormatWith(new {username = "Bob"});
+            model.Message2 = S._("Hello {username}!").FormatWithNamed(new {username = "Bob"});
 
             model.AnotherModel = new IndexModel.IndexAnotherModel
                                      {
@@ -32,7 +33,7 @@ namespace GettextMvcSample.Controllers
 
             for (var i = 0; i < 4; i++)
             {
-                var plural = S._("{fileCount} file", "{fileCount} files", i).FormatWith(new {fileCount = i});
+                var plural = S._("{fileCount} file", "{fileCount} files", i).FormatWithNamed(new {fileCount = i});
                 model.PluralStrings.Add(plural);
             }
 
