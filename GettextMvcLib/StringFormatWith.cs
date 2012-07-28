@@ -44,7 +44,7 @@ namespace GettextMvcLib
         /// <param name="format">The object being formatted</param>
         /// <param name="args">strings that will replace formatting characters</param>
         /// <returns>a string with all formatting characters replaced by the passed in arguements</returns>
-        public static string FormatWith(this GettextTranslatedString format, params string[] args)
+        public static string FormatWith(this GettextTranslatedString format, params object[] args)
         {
             if (format.String == null)
                 throw new ArgumentNullException("format");
@@ -73,7 +73,7 @@ namespace GettextMvcLib
         /// <param name="htmlEncode">Passing any bool indicates the object should html encoded</param>
         /// <param name="args">objects that may not be strings that will replace formatting characters</param>
         /// <returns>an HtmlString with all formatting characters replaced by the passed in arguements</returns>
-        public static MvcHtmlString HtmlFormatWith(this GettextTranslatedString format, params string[] args)
+        public static MvcHtmlString HtmlFormatWith(this GettextTranslatedString format, params object[] args)
         {
             if (format.String == null)
                 throw new ArgumentNullException("format");
