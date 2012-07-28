@@ -36,7 +36,7 @@ GettextClass.prototype._ = function (msgid, msgidPlural, n) {
     return msgid;
 };
 
-String.prototype.format = function () {
+String.prototype.formatWith = function () {
     var args = arguments;
     return this.replace(/{(\d+)}/g, function (match, number) {
         return typeof args[number] != 'undefined'
@@ -46,7 +46,7 @@ String.prototype.format = function () {
     });
 };
 
-String.prototype.formatWith = function () {
+String.prototype.formatWithNamed = function () {
     var args = arguments;
     var obj = args[0];
     return this.replace(/{(\w+)}/g, function (match, key) {
