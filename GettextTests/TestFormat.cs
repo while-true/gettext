@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using System.Text;
 using GettextLib;
@@ -11,10 +12,22 @@ namespace GettextTests
     public class TestFormat
     {
         [Test]
-        public void T()
+        public void TestNamedFormatString()
         {
-            var g = new GettextTranslatedString("Hello {world}!").FormatWithNamed(new {world = "WORLD"});
-            StringAssert.AreEqualIgnoringCase("Hello WORLD!", g);
+            {
+                var t = new GettextTranslatedString("Hello {world}!").FormatWithNamed(new {world = "WORLD"});
+                Assert.That(t, Is.EqualTo("Hello WORLD!"));
+            }
+
+            {
+                var t = new GettextTranslatedString("Hello {a.b}!").FormatWithNamed(new {a = new {b = "WORLD"}});
+                Assert.That(t, Is.EqualTo("Hello WORLD!"));
+            }
+
+            {
+                var t = new GettextTranslatedString("Float: {floatValue:0.00}", CultureInfo.InvariantCulture).FormatWithNamed(new { floatValue = 1.2345 });
+                Assert.That(t, Is.EqualTo("Float: 1.23"));
+            }
         }
     }
 }
