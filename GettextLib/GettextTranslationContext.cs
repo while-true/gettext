@@ -3,7 +3,7 @@ using System.Globalization;
 
 namespace GettextLib
 {
-    public class GettextTranslationContext
+    public class GettextTranslationContext : IGettextTranslationContext
     {
         private readonly LanguageTranslation languageTranslation;
 
