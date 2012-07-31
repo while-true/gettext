@@ -49,6 +49,7 @@
     <Compile Include="GettextDummy.cs" />
     <Compile Include="GettextException.cs" />
     <Compile Include="GettextFactory.cs" />
+    <Compile Include="GettextFilesystemFactory.cs" />
     <Compile Include="GettextPseudo.cs" />
     <Compile Include="GettextTranslatedString.cs" />
     <Compile Include="GettextCommentAttribute.cs" />
