@@ -25,7 +25,7 @@ namespace GettextLib
         {
             return new GettextTranslationContext(new LanguageTranslation
                 {
-                    LangId = "null",
+                    LangId = GettextConsts.GettextNullLanguage,
                     Gettext = new GettextDummy()
                 });
         }
