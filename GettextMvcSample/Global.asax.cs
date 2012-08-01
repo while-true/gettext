@@ -2,8 +2,10 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
+using System.Web.Hosting;
 using System.Web.Mvc;
 using System.Web.Routing;
+using GettextLib;
 using GettextMvcLib;
 
 namespace GettextMvcSample
@@ -37,8 +39,29 @@ namespace GettextMvcSample
             RegisterGlobalFilters(GlobalFilters.Filters);
             RegisterRoutes(RouteTable.Routes);
 
+            {
+                gettextFilesystemFactory = new GettextFilesystemFactory(HostingEnvironment.MapPath(@"~/po/"));
+            }
+
             GettextMvcIntegration.InstallGettextMetadataProviderWrapper();
             GettextMvcIntegration.InstallGettextModelValidatorProviderWrappers();
+        }
+
+        public override void Dispose()
+        {
+            if (gettextFilesystemFactory != null)
+            {
+                gettextFilesystemFactory.Dispose();
+            }
+
+            base.Dispose();
+        }
+
+        private static GettextFilesystemFactory gettextFilesystemFactory;
+
+        public static IGettextFactory GettextFactory()
+        {
+            return gettextFilesystemFactory;
         }
     }
 }
