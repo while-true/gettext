@@ -37,11 +37,11 @@ namespace GettextMvcLib
             return MvcHtmlString.Create(string.Format(format.CultureInfo, format, args));
         }
 
-        public static MvcHtmlString HtmlFormatWithNamed([NotNull] this GettextTranslatedString format, object obj)
+        public static MvcHtmlString HtmlFormatWith([NotNull] this GettextTranslatedString format, object obj)
         {
             if (format == null) throw new ArgumentNullException("format");
 
-            return MvcHtmlString.Create(format.FormatWithNamed(obj));
+            return MvcHtmlString.Create(format.FormatWith(obj));
         }
     }
 }

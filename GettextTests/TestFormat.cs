@@ -15,17 +15,17 @@ namespace GettextTests
         public void TestNamedFormatString()
         {
             {
-                var t = new GettextTranslatedString("Hello {world}!").FormatWithNamed(new {world = "WORLD"});
+                var t = new GettextTranslatedString("Hello {world}!").FormatWith(new {world = "WORLD"});
                 Assert.That(t, Is.EqualTo("Hello WORLD!"));
             }
 
             {
-                var t = new GettextTranslatedString("Hello {a.b}!").FormatWithNamed(new {a = new {b = "WORLD"}});
+                var t = new GettextTranslatedString("Hello {a.b}!").FormatWith(new {a = new {b = "WORLD"}});
                 Assert.That(t, Is.EqualTo("Hello WORLD!"));
             }
 
             {
-                var t = new GettextTranslatedString("Float: {floatValue:0.00}", CultureInfo.InvariantCulture).FormatWithNamed(new { floatValue = 1.2345 });
+                var t = new GettextTranslatedString("Float: {floatValue:0.00}", CultureInfo.InvariantCulture).FormatWith(new { floatValue = 1.2345 });
                 Assert.That(t, Is.EqualTo("Float: 1.23"));
             }
         }

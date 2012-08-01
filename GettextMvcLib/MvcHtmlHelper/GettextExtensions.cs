@@ -33,5 +33,17 @@ namespace GettextMvcLib.MvcHtmlHelper
             var ctx = GetContext(helper);
             return new GettextMvcTranslatedString(ctx.Gettext.NGettext(msgid, msgidPlural, n), ctx.Culture);
         }
+
+        public static GettextMvcTranslatedString PNGettext(this HtmlHelper helper, string msgctxt, string msgid, string msgidPlural, int n)
+        {
+            var ctx = GetContext(helper);
+            return new GettextMvcTranslatedString(ctx.PNGettext(msgctxt, msgid, msgidPlural, n));
+        }
+
+        public static GettextMvcTranslatedString PGettext(this HtmlHelper helper, string msgctxt, string msgid)
+        {
+            var ctx = GetContext(helper);
+            return new GettextMvcTranslatedString(ctx.PGettext(msgctxt, msgid));
+        }
     }
 }

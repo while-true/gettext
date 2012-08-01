@@ -15,7 +15,7 @@ namespace GettextLib
         /// <param name="format">The string being formatted</param>
         /// <param name="args">strings that will replace formatting characters</param>
         /// <returns>a string with all formatting characters replaced by the passed in arguments</returns>
-        public static string FormatWith(this GettextTranslatedString format, params object[] args)
+        public static string Format(this GettextTranslatedString format, params object[] args)
         {
             if (format.String == null)
                 throw new ArgumentNullException("format");
@@ -31,7 +31,7 @@ namespace GettextLib
         /// <param name="format">String format</param>
         /// <param name="source">Data object</param>
         /// <returns>Formatter string</returns>
-        public static string FormatWithNamed(this GettextTranslatedString format, object source)
+        public static string FormatWith(this GettextTranslatedString format, object source)
         {
             if (format.String == null)
                 throw new ArgumentNullException("format");
