@@ -16,11 +16,11 @@ namespace GettextLib
     /// 
     /// Monitors when files are changed, added or removed. Thread safe.
     /// </summary>
-    public class GettextFilesystemFactory : IDisposable
+    public class GettextFilesystemFactory : GettextFactoryBase, IDisposable
     {
         private readonly string poDirectory;
         private Dictionary<string, LanguageTranslation> catalogs;
-        private FileSystemWatcher fileSystemWatcher;
+        private readonly FileSystemWatcher fileSystemWatcher;
 
         /// <summary>
         /// Lock when retrieving or modifying the translation collection.
@@ -82,7 +82,6 @@ namespace GettextLib
 
                 LoadIntoCatalogs(languages, catalogs);
             }
-
         }
 
         private GettextFilesystemFactory()
@@ -126,6 +125,30 @@ namespace GettextLib
                 fileSystemWatcher.Renamed -= FileSystemWatcherEventHandler;
 
                 fileSystemWatcher.Dispose();
+            }
+        }
+
+        public override GettextTranslationContext GetContext(string langId)
+        {
+            if (string.IsNullOrWhiteSpace(langId) || langId == GettextConsts.GettextNullLanguage)
+            {
+                return GetNullContext();
+            }
+
+            if (langId == GettextConsts.GettextPseudoLanguage)
+            {
+                return GetPseudoContext();
+            }
+
+            lock (lockObject)
+            {
+                LanguageTranslation l;
+                if (catalogs.TryGetValue(langId, out l))
+                {
+                    return new GettextTranslationContext(l);
+                }
+
+                return GetNullContext();
             }
         }
     }

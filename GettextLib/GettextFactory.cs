@@ -7,7 +7,7 @@ using GettextLib.Catalog;
 
 namespace GettextLib
 {
-    public class GettextFactory
+    public class GettextFactory : GettextFactoryBase
     {
         public GettextFactory()
         {
@@ -36,52 +36,25 @@ namespace GettextLib
                              });
         }
 
-        public GettextTranslationContext GetContext(string langId)
+        public override GettextTranslationContext GetContext(string langId)
         {
-            if (langId == GettextConsts.GettextPseudoLanguage)
+            if (string.IsNullOrWhiteSpace(langId) || langId == GettextConsts.GettextNullLanguage)
             {
-                return new GettextTranslationContext(new LanguageTranslation
-                                                         {
-                                                             LangId = GettextConsts.GettextPseudoLanguage,
-                                                             Gettext = new GettextPseudo()
-                                                         });
+                return GetNullContext();
             }
 
-			if (langId == GettextConsts.GettextDefaultLanguage)
-			{
-				return GetNullContext();
-			}
-			
+            if (langId == GettextConsts.GettextPseudoLanguage)
+            {
+                return GetPseudoContext();
+            }
+
             var l = catalogs.SingleOrDefault(x => x.LangId == langId);
             if (l == null)
             {
-                //throw new Exception("Language not found");
                 return GetNullContext();
             }
 
             return new GettextTranslationContext(l);
-        }
-
-        /// <summary>
-        /// Return pseudoized strings.
-        /// </summary>
-        /// <returns></returns>
-        public GettextTranslationContext GetPseudoContext()
-        {
-            return GetContext(GettextConsts.GettextPseudoLanguage);
-        }
-
-        /// <summary>
-        /// No translations - return what we get.
-        /// </summary>
-        /// <returns></returns>
-        public GettextTranslationContext GetNullContext()
-        {
-            return new GettextTranslationContext(new LanguageTranslation
-                                                     {
-                                                         LangId = "null",
-                                                         Gettext = new GettextDummy()
-                                                     });
         }
     }
 }

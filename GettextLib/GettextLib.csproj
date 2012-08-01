@@ -49,6 +49,7 @@
     <Compile Include="GettextDummy.cs" />
     <Compile Include="GettextException.cs" />
     <Compile Include="GettextFactory.cs" />
+    <Compile Include="GettextFactoryBase.cs" />
     <Compile Include="GettextFilesystemFactory.cs" />
     <Compile Include="GettextPseudo.cs" />
     <Compile Include="GettextTranslatedString.cs" />
@@ -56,6 +57,7 @@
     <Compile Include="GettextTranslationContext.cs" />
     <Compile Include="GettextUtils.cs" />
     <Compile Include="IGettext.cs" />
+    <Compile Include="IGettextFactory.cs" />
     <Compile Include="IGettextTranslationContext.cs" />
     <Compile Include="LanguageTranslation.cs" />
     <Compile Include="Libs\ResharperAnnotations.cs" />
