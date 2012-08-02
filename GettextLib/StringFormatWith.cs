@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Text.RegularExpressions;
-using JetBrains.Annotations;
 
 namespace GettextLib
 {
@@ -58,7 +57,7 @@ namespace GettextLib
 
         public static class StringEval
         {
-            public static object Eval(object obj, [NotNull] string expr)
+            public static object Eval(object obj, string expr)
             {
                 if (string.IsNullOrWhiteSpace(expr)) throw new ArgumentNullException("expr");
                 expr = expr.Trim();

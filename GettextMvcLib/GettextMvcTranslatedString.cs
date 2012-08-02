@@ -4,7 +4,6 @@ using System.Globalization;
 using System.Linq;
 using System.Text;
 using System.Web;
-using JetBrains.Annotations;
 
 namespace GettextMvcLib
 {
@@ -14,7 +13,7 @@ namespace GettextMvcLib
         {
         }
 
-        public GettextMvcTranslatedString([NotNull] GettextLib.GettextTranslatedString s) : base(s.String, s.CultureInfo)
+        public GettextMvcTranslatedString(GettextLib.GettextTranslatedString s) : base(s.String, s.CultureInfo)
         {
             if (s == null) throw new ArgumentNullException("s");
         }

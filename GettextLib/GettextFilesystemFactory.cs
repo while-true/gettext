@@ -5,7 +5,6 @@ using System.IO;
 using System.Linq;
 using System.Text;
 using GettextLib.Catalog;
-using JetBrains.Annotations;
 
 namespace GettextLib
 {
@@ -44,7 +43,7 @@ namespace GettextLib
         /// </summary>
         private object lockObject = new object();
 
-        public GettextFilesystemFactory([NotNull] string poDirectory, LocaleFileOrganizationEnum fileOrganization) : this()
+        public GettextFilesystemFactory(string poDirectory, LocaleFileOrganizationEnum fileOrganization) : this()
         {
             if (poDirectory == null) throw new ArgumentNullException("poDirectory");
             this.poDirectory = poDirectory;
@@ -89,7 +88,7 @@ namespace GettextLib
             }
         }
 
-        private static void LoadIntoCatalogs([NotNull] IEnumerable<LanguageTranslation> l, [NotNull] Dictionary<string, LanguageTranslation> d)
+        private static void LoadIntoCatalogs(IEnumerable<LanguageTranslation> l, Dictionary<string, LanguageTranslation> d)
         {
             if (l == null) throw new ArgumentNullException("l");
             if (d == null) throw new ArgumentNullException("d");
@@ -119,7 +118,7 @@ namespace GettextLib
             catalogs = new Dictionary<string, LanguageTranslation>();
         }
 
-        private static LanguageTranslation LoadCatalog([NotNull] FileInfo f, LocaleFileOrganizationEnum fileOrganization)
+        private static LanguageTranslation LoadCatalog(FileInfo f, LocaleFileOrganizationEnum fileOrganization)
         {
             if (f == null) throw new ArgumentNullException("f");
             if (!f.Exists) throw new GettextException("File " + f.FullName + " doesn't exist anymore!");
@@ -146,7 +145,7 @@ namespace GettextLib
             }
         }
 
-        private static List<LanguageTranslation> LoadAllLanguages([NotNull] DirectoryInfo d, LocaleFileOrganizationEnum fileOrganization)
+        private static List<LanguageTranslation> LoadAllLanguages(DirectoryInfo d, LocaleFileOrganizationEnum fileOrganization)
         {
             if (d == null) throw new ArgumentNullException("d");
             if (!d.Exists) throw new GettextException("Directory " + d.FullName + " doesn't exist!");

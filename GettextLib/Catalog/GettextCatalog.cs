@@ -5,7 +5,6 @@ using System.Linq;
 using System.Text;
 using System.Text.RegularExpressions;
 using GettextLib.ExpressionEvaluator;
-using JetBrains.Annotations;
 using Scanner = GettextLib.Parser.Scanner;
 
 namespace GettextLib.Catalog
@@ -92,7 +91,7 @@ namespace GettextLib.Catalog
             }
         }
 
-        public static GettextCatalog ParseFromStream([NotNull] Stream poStream)
+        public static GettextCatalog ParseFromStream(Stream poStream)
         {
             if (poStream == null) throw new ArgumentNullException("poStream");
 

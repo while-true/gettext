@@ -60,7 +60,6 @@
     <Compile Include="IGettextFactory.cs" />
     <Compile Include="IGettextTranslationContext.cs" />
     <Compile Include="LanguageTranslation.cs" />
-    <Compile Include="Libs\ResharperAnnotations.cs" />
     <Compile Include="Libs\ShiftReduceParserCode.cs" />
     <Compile Include="Parser\PoLexer.cs" />
     <Compile Include="Parser\PoParser.cs" />
