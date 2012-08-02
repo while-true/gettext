@@ -40,7 +40,7 @@ namespace GettextMvcSample
             RegisterRoutes(RouteTable.Routes);
 
             {
-                gettextFilesystemFactory = new GettextFilesystemFactory(HostingEnvironment.MapPath(@"~/po/"));
+                gettextFilesystemFactory = new GettextFilesystemFactory(HostingEnvironment.MapPath(@"~/po/"), GettextFilesystemFactory.LocaleFileOrganizationEnum.FilePerLocale);
             }
 
             GettextMvcIntegration.InstallGettextMetadataProviderWrapper();

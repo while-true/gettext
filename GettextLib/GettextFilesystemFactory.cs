@@ -19,18 +19,36 @@ namespace GettextLib
     public class GettextFilesystemFactory : GettextFactoryBase, IDisposable
     {
         private readonly string poDirectory;
+        private readonly LocaleFileOrganizationEnum fileOrganization;
         private Dictionary<string, LanguageTranslation> catalogs;
         private readonly FileSystemWatcher fileSystemWatcher;
+
+        public enum LocaleFileOrganizationEnum
+        {
+            /// <summary>
+            /// Translations are stored in files named after cultures, all in the poDirectory.
+            /// 
+            /// Samples: en-US.po, sl-SI.po, ...
+            /// </summary>
+            FilePerLocale,
+            /// <summary>
+            /// Translations are stored in a message.po in a directory named after the locale.
+            /// 
+            /// Samples: en-US/messages.po, sl-SI/messages.po, ...
+            /// </summary>
+            DirectoryPerLocale
+        }
 
         /// <summary>
         /// Lock when retrieving or modifying the translation collection.
         /// </summary>
         private object lockObject = new object();
 
-        public GettextFilesystemFactory([NotNull] string poDirectory) : this()
+        public GettextFilesystemFactory([NotNull] string poDirectory, LocaleFileOrganizationEnum fileOrganization) : this()
         {
             if (poDirectory == null) throw new ArgumentNullException("poDirectory");
             this.poDirectory = poDirectory;
+            this.fileOrganization = fileOrganization;
             if (string.IsNullOrWhiteSpace(poDirectory)) throw new GettextException("Missing directory parameter");
 
             var d = new DirectoryInfo(poDirectory);
@@ -38,7 +56,7 @@ namespace GettextLib
 
             // initial load
             {
-                var c = LoadAllLanguages(d);
+                var c = LoadAllLanguages(d, fileOrganization);
 
                 lock (lockObject)
                 {
@@ -46,17 +64,29 @@ namespace GettextLib
                 }
             }
 
-            // set up watcher
-            fileSystemWatcher = new FileSystemWatcher(d.FullName, "*.po");
-            fileSystemWatcher.NotifyFilter = NotifyFilters.LastWrite | NotifyFilters.FileName | NotifyFilters.DirectoryName;
-            fileSystemWatcher.IncludeSubdirectories = false;
-            
-            fileSystemWatcher.Changed += FileSystemWatcherEventHandler;
-            fileSystemWatcher.Created += FileSystemWatcherEventHandler;
-            fileSystemWatcher.Deleted += FileSystemWatcherEventHandler;
-            fileSystemWatcher.Renamed += FileSystemWatcherEventHandler;
+            // filesystem watcher
+            {
+                var includeSubdirectories = false;
+                var filePattern = "*.po";
 
-            fileSystemWatcher.EnableRaisingEvents = true;
+                if (fileOrganization == LocaleFileOrganizationEnum.DirectoryPerLocale)
+                {
+                    filePattern = "messages.po";
+                    includeSubdirectories = true;
+                }
+
+                // init
+                fileSystemWatcher = new FileSystemWatcher(d.FullName, filePattern);
+                fileSystemWatcher.NotifyFilter = NotifyFilters.LastWrite | NotifyFilters.FileName | NotifyFilters.DirectoryName;
+                fileSystemWatcher.IncludeSubdirectories = includeSubdirectories;
+
+                fileSystemWatcher.Changed += FileSystemWatcherEventHandler;
+                fileSystemWatcher.Created += FileSystemWatcherEventHandler;
+                fileSystemWatcher.Deleted += FileSystemWatcherEventHandler;
+                fileSystemWatcher.Renamed += FileSystemWatcherEventHandler;
+
+                fileSystemWatcher.EnableRaisingEvents = true;
+            }
         }
 
         private static void LoadIntoCatalogs([NotNull] IEnumerable<LanguageTranslation> l, [NotNull] Dictionary<string, LanguageTranslation> d)
@@ -74,7 +104,7 @@ namespace GettextLib
         {
             // also RenamedEventArgs
             var d = new DirectoryInfo(poDirectory);
-            var languages = LoadAllLanguages(d);
+            var languages = LoadAllLanguages(d, fileOrganization);
 
             lock (lockObject)
             {
@@ -89,12 +119,22 @@ namespace GettextLib
             catalogs = new Dictionary<string, LanguageTranslation>();
         }
 
-        private static LanguageTranslation LoadCatalog([NotNull] FileInfo f)
+        private static LanguageTranslation LoadCatalog([NotNull] FileInfo f, LocaleFileOrganizationEnum fileOrganization)
         {
             if (f == null) throw new ArgumentNullException("f");
             if (!f.Exists) throw new GettextException("File " + f.FullName + " doesn't exist anymore!");
             
-            var langId = f.Name.Replace(".po", "").Trim();
+            string langId = null;
+            if (fileOrganization == LocaleFileOrganizationEnum.FilePerLocale)
+            {
+                langId = f.Name.Replace(".po", "").Trim();
+            } else
+            {
+                if (f.Directory != null) langId = f.Directory.Parent.Name.Trim();
+            }
+
+            if (langId == null) throw new GettextException("Language id for file " + f.FullName + " can't be determined.");
+
 
             using (var fs = f.OpenRead())
             {
@@ -106,13 +146,15 @@ namespace GettextLib
             }
         }
 
-        private static List<LanguageTranslation> LoadAllLanguages([NotNull] DirectoryInfo d)
+        private static List<LanguageTranslation> LoadAllLanguages([NotNull] DirectoryInfo d, LocaleFileOrganizationEnum fileOrganization)
         {
             if (d == null) throw new ArgumentNullException("d");
+            if (!d.Exists) throw new GettextException("Directory " + d.FullName + " doesn't exist!");
 
-            var f = d.GetFiles("*.po", SearchOption.TopDirectoryOnly);
+            var f = d.GetFiles(fileOrganization == LocaleFileOrganizationEnum.FilePerLocale ? "*.po" : "messages.po", 
+                               fileOrganization == LocaleFileOrganizationEnum.FilePerLocale ? SearchOption.TopDirectoryOnly : SearchOption.AllDirectories);
 
-            return f.Select(LoadCatalog).ToList();
+            return f.Select(info => LoadCatalog(info, fileOrganization)).ToList();
         }
 
         public void Dispose()
