@@ -1,0 +1,1 @@
+nuget pack GettextLib.csproj -Prop Configuration=Release

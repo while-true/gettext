@@ -6,9 +6,9 @@ using System.Runtime.InteropServices;
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
 [assembly: AssemblyTitle("GettextLib")]
-[assembly: AssemblyDescription("")]
+[assembly: AssemblyDescription("Gettext translation library and file parser")]
 [assembly: AssemblyConfiguration("")]
-[assembly: AssemblyCompany("")]
+[assembly: AssemblyCompany("While True, d.o.o.")]
 [assembly: AssemblyProduct("GettextLib")]
 [assembly: AssemblyCopyright("Copyright ©  2012")]
 [assembly: AssemblyTrademark("")]
