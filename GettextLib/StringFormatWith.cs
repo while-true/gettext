@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Text.RegularExpressions;
-using JetBrains.Annotations;
 
 namespace GettextLib
 {
@@ -15,7 +14,7 @@ namespace GettextLib
         /// <param name="format">The string being formatted</param>
         /// <param name="args">strings that will replace formatting characters</param>
         /// <returns>a string with all formatting characters replaced by the passed in arguments</returns>
-        public static string FormatWith(this GettextTranslatedString format, params object[] args)
+        public static string Format(this GettextTranslatedString format, params object[] args)
         {
             if (format.String == null)
                 throw new ArgumentNullException("format");
@@ -31,7 +30,7 @@ namespace GettextLib
         /// <param name="format">String format</param>
         /// <param name="source">Data object</param>
         /// <returns>Formatter string</returns>
-        public static string FormatWithNamed(this GettextTranslatedString format, object source)
+        public static string FormatWith(this GettextTranslatedString format, object source)
         {
             if (format.String == null)
                 throw new ArgumentNullException("format");
@@ -58,7 +57,7 @@ namespace GettextLib
 
         public static class StringEval
         {
-            public static object Eval(object obj, [NotNull] string expr)
+            public static object Eval(object obj, string expr)
             {
                 if (string.IsNullOrWhiteSpace(expr)) throw new ArgumentNullException("expr");
                 expr = expr.Trim();

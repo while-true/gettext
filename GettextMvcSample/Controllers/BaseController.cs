@@ -12,23 +12,16 @@ namespace GettextMvcSample.Controllers
     {
         public BaseController()
         {
-            var gf = new GettextFactory();
-
-            var mapPath = System.Web.HttpContext.Current.Server.MapPath("~/po/sl_SI/messages.po");
-
-            using (var file = System.IO.File.OpenRead(mapPath))
-            {
-                gf.AddTranslation("sl_SI", file);
-            }
-
+            /*
             if (false)
             {
                 var gp = gf.GetPseudoContext();
                 GettextMvcIntegration.SetAsContextForCurrentRequest(gp, this);
                 return;
             }
-            
-            var gc = gf.GetContext("sl_SI");
+            */
+
+            var gc = MvcApplication.GettextFactory().GetContext("sl-SI");
             GettextMvcIntegration.SetAsContextForCurrentRequest(gc, this);
         }
     }

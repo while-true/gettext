@@ -8,13 +8,12 @@ using GettextLib;
 using System.Web;
 using System.Globalization;
 using System.Web.Mvc;
-using JetBrains.Annotations;
 
 namespace GettextMvcLib
 {
     public static class StringFormatWith
     {
-        public static MvcHtmlString ToHtmlString([NotNull] this GettextTranslatedString str)
+        public static MvcHtmlString ToHtmlString(this GettextTranslatedString str)
         {
             if (str == null) throw new ArgumentNullException("str");
             
@@ -37,11 +36,11 @@ namespace GettextMvcLib
             return MvcHtmlString.Create(string.Format(format.CultureInfo, format, args));
         }
 
-        public static MvcHtmlString HtmlFormatWithNamed([NotNull] this GettextTranslatedString format, object obj)
+        public static MvcHtmlString HtmlFormatWith(this GettextTranslatedString format, object obj)
         {
             if (format == null) throw new ArgumentNullException("format");
 
-            return MvcHtmlString.Create(format.FormatWithNamed(obj));
+            return MvcHtmlString.Create(format.FormatWith(obj));
         }
     }
 }

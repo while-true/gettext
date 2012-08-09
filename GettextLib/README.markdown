@@ -1,3 +1,8 @@
+.NET Gettext Library
+
+
+Acknowledgments
+
 Lexer & Parser generated with gplex and gppg, Copyright 2005-2012 Queensland University of Technology (QUT). All rights reserved.
 
 http://gplex.codeplex.com/

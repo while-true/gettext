@@ -13,6 +13,11 @@ namespace GettextMvcLib
         {
         }
 
+        public GettextMvcTranslatedString(GettextLib.GettextTranslatedString s) : base(s.String, s.CultureInfo)
+        {
+            if (s == null) throw new ArgumentNullException("s");
+        }
+
         public string ToHtmlString()
         {
             return String;
