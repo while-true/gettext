@@ -84,8 +84,10 @@ namespace GettextLib
                         ret = f.GetValue(ret);
                         continue;
                     }
-                    
-                    throw new Exception(string.Format("Property or field \"{0}\" not found!", part));
+
+                    return "{missing}";
+
+                    //throw new Exception(string.Format("Property or field \"{0}\" not found!", part));
                 }
 
                 return ret;
