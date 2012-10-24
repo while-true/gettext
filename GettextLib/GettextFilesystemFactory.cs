@@ -129,7 +129,7 @@ namespace GettextLib
                 langId = f.Name.Replace(".po", "").Trim();
             } else
             {
-                if (f.Directory != null) langId = f.Directory.Parent.Name.Trim();
+                if (f.Directory != null) langId = f.Directory.Name.Trim();
             }
 
             if (langId == null) throw new GettextException("Language id for file " + f.FullName + " can't be determined.");
@@ -139,7 +139,17 @@ namespace GettextLib
             {
                 var catalog = GettextCatalog.ParseFromStream(fs);
 
-                var lt = new LanguageTranslation {LangId = langId, Culture = CultureInfo.GetCultureInfo(langId), Gettext = new Gettext(catalog)};
+                CultureInfo cultureInfo;
+                try
+                {
+                    cultureInfo = CultureInfo.GetCultureInfo(langId);
+                }
+                catch (Exception)
+                {
+                    cultureInfo = CultureInfo.InvariantCulture;
+                }
+
+                var lt = new LanguageTranslation {LangId = langId, Culture = cultureInfo, Gettext = new Gettext(catalog)};
 
                 return lt;
             }
