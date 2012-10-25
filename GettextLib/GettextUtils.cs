@@ -15,12 +15,7 @@ namespace GettextLib
 
         public static GettextTranslationContext CreateNullContext()
         {
-            return new GettextTranslationContext(new LanguageTranslation
-            {
-                Culture = CultureInfo.InvariantCulture,
-                Gettext = new GettextDummy(),
-                LangId = GettextConsts.GettextNullLanguage
-            });
+            return new GettextTranslationContext(new LanguageTranslation(GettextConsts.GettextNullLanguage, new GettextDummy(), CultureInfo.InvariantCulture));
         }
     }
 }

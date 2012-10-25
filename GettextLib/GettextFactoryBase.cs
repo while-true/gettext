@@ -1,3 +1,5 @@
+using System.Globalization;
+
 namespace GettextLib
 {
     public abstract class GettextFactoryBase : IGettextFactory
@@ -10,11 +12,7 @@ namespace GettextLib
         /// <returns></returns>
         public GettextTranslationContext GetPseudoContext()
         {
-            return new GettextTranslationContext(new LanguageTranslation
-                {
-                    LangId = GettextConsts.GettextPseudoLanguage,
-                    Gettext = new GettextPseudo()
-                });
+            return new GettextTranslationContext(new LanguageTranslation(GettextConsts.GettextPseudoLanguage, new GettextPseudo(), CultureInfo.InvariantCulture));
         }
 
         /// <summary>
@@ -23,11 +21,7 @@ namespace GettextLib
         /// <returns></returns>
         public GettextTranslationContext GetNullContext()
         {
-            return new GettextTranslationContext(new LanguageTranslation
-                {
-                    LangId = GettextConsts.GettextNullLanguage,
-                    Gettext = new GettextDummy()
-                });
+            return new GettextTranslationContext(new LanguageTranslation(GettextConsts.GettextNullLanguage, new GettextDummy(), CultureInfo.InvariantCulture));
         }
     }
 }

@@ -28,12 +28,7 @@ namespace GettextLib
 
             culture = culture ?? CultureInfo.InvariantCulture;
 
-            catalogs.Add(new LanguageTranslation
-                             {
-                                 Gettext = new Gettext(catalog),
-                                 LangId = languageId,
-                                 Culture = culture
-                             });
+            catalogs.Add(new LanguageTranslation(languageId, new Gettext(catalog), culture));
         }
 
         public override GettextTranslationContext GetContext(string langId)

@@ -149,7 +149,7 @@ namespace GettextLib
                     cultureInfo = CultureInfo.InvariantCulture;
                 }
 
-                var lt = new LanguageTranslation {LangId = langId, Culture = cultureInfo, Gettext = new Gettext(catalog)};
+                var lt = new LanguageTranslation(langId, new Gettext(catalog), cultureInfo);
 
                 return lt;
             }
